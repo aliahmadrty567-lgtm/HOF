@@ -4,9 +4,9 @@
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
-<script src="hof-splash.js"></script>
+
 <link rel="stylesheet" href="hof-premium.css?v=1">
-<script src="hof-premium.js?v=1" defer></script>
+
 <style>
 :root{--bg1:#dff1ff;--bg2:#ffffff;--tx:#0b1220;--mu:#5b6b80;--ac:#4cb8ff;--ac2:#1e90e6;--gl:rgba(255,255,255,.55);--gb:rgba(255,255,255,.85);--sh:0 10px 30px rgba(30,144,230,.16);--in:rgba(255,255,255,.7);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#08192b;--bg2:#000;--tx:#eef6ff;--mu:#8fa6bf;--gl:rgba(18,32,50,.55);--gb:rgba(130,200,255,.2);--sh:0 10px 30px rgba(0,0,0,.55);--in:rgba(255,255,255,.07)}}
@@ -173,8 +173,180 @@ textarea{width:100%;min-height:80px;padding:12px 14px;border-radius:16px;border:
 .cam{position:absolute;right:-4px;bottom:-4px;width:34px;height:34px;border-radius:50%;background:#4cb8ff;display:grid;place-items:center;cursor:pointer;font-size:16px}
 .rmb{display:flex;gap:20px;margin-top:10px;padding:10px 12px;border-radius:14px;background:rgba(76,184,255,.18)}.rmb div{display:flex;flex-direction:column}.rmb b{font-size:16px}
 .tbl{overflow-x:auto}.tbl table{border-collapse:collapse;font-size:12px;width:100%}.tbl th,.tbl td{padding:6px 8px;border-bottom:1px solid var(--gb);text-align:left;white-space:nowrap}
-</style><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#020a2a"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script></head>
+</style><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"><link rel="manifest" href="manifest.json"><meta name="theme-color" content="#020a2a"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script><style>
+/* ===== HOF v3: chat, rooms, feedback, growth, animations ===== */
+/* ===== HOF v2: Instagram-style chat, scrim rooms, feedback ===== */
+.cm .bb{max-width:78%;padding:9px 14px;line-height:1.35;font-size:14.5px;border-radius:20px}
+@keyframes hxin{from{opacity:0;transform:translateY(6px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes hxpop{0%{transform:scale(.4)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
+.cm .bb.sb{background:linear-gradient(180deg,#833ab4 0%,#c13584 35%,#e1306c 60%,#fd1d1d 80%,#fcaf45 100%);background-attachment:fixed;color:#fff;box-shadow:0 6px 18px rgba(225,48,108,.28)}
+.cm .bb.sb.l1{border-bottom-right-radius:6px}
+.cm .bb.sb:not(.f1){border-top-right-radius:6px}
+.cm .bb.rb{background:var(--in);border:1px solid var(--gb)}
+.cm .bb.rb.l1{border-bottom-left-radius:6px}
+.cm .bb.rb:not(.f1){border-top-left-radius:6px}
+.cm .bb.hrt{background:none!important;box-shadow:none!important;border:0!important;font-size:38px;padding:0 4px}
+.cm{gap:2px}
+.hxn{font-size:11px;font-weight:700;margin:8px 10px 1px}
+.hxt{font-size:10.5px;color:var(--mu);margin:1px 8px 6px}
+.hxt.r{text-align:right}
+#typ{display:flex;flex-direction:column;gap:2px}
+.cm .bb.hxty{display:inline-flex;gap:5px;align-items:center;padding:14px 16px;width:max-content;border-radius:20px;border-bottom-left-radius:6px;animation:hxin .22s ease-out}
+.hxty i{width:8px;height:8px;border-radius:50%;background:var(--mu);animation:hxd 1.2s infinite ease-in-out}
+.hxty i:nth-child(2){animation-delay:.18s}
+.hxty i:nth-child(3){animation-delay:.36s}
+@keyframes hxd{0%,60%,100%{transform:translateY(0);opacity:.35}30%{transform:translateY(-5px);opacity:1}}
+.hxtp{color:#e1306c;font-weight:700}
+.hxtp b{animation:hxb 1.2s infinite}
+.hxtp b:nth-child(2){animation-delay:.2s}
+.hxtp b:nth-child(3){animation-delay:.4s}
+@keyframes hxb{0%,60%,100%{opacity:.2}30%{opacity:1}}
+.ci{border:1.5px solid transparent;background:linear-gradient(var(--bg2),var(--bg2)) padding-box,linear-gradient(90deg,#833ab4,#fd1d1d,#fcaf45) border-box}
+.ci button{background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcaf45);color:#fff;border:0;border-radius:99px;padding:9px 16px;font-weight:700;font-size:15px;cursor:pointer}
+.rg{background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)}
+.cr{border-radius:16px;padding:10px 8px}
+.cr:active{background:var(--in)}
+.cr.live{background:linear-gradient(90deg,rgba(131,58,180,.16),rgba(253,29,29,.10),rgba(252,175,69,.12));border:1px solid rgba(225,48,108,.35);margin-bottom:8px}
+.lv{margin-left:8px;font-size:10px;font-weight:800;padding:2px 7px;border-radius:99px;background:linear-gradient(135deg,#833ab4,#fd1d1d);color:#fff;vertical-align:middle;letter-spacing:.5px}
+.bd2{background:linear-gradient(135deg,#833ab4,#fd1d1d)!important;color:#fff!important}
+.rcard{border-radius:20px;padding:14px;margin:0 0 12px;background:linear-gradient(135deg,rgba(131,58,180,.22),rgba(253,29,29,.16),rgba(252,175,69,.18));border:1px solid rgba(225,48,108,.4)}
+.rch{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px}
+.rch .rmt{font-size:12px;font-weight:700;color:#e1306c}
+.rcr{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--in);border-radius:14px;padding:10px 12px;margin-bottom:8px}
+.rcr small{display:block;font-size:10px;letter-spacing:1px;color:var(--mu);font-weight:700}
+.rcr b{font-size:18px;letter-spacing:1px;word-break:break-all}
+.ta,.sel{width:100%;padding:12px 14px;border-radius:16px;border:1px solid var(--gb);background:var(--in);color:var(--tx);font:500 14px inherit;font-family:inherit;outline:0;margin-bottom:8px}
+.ta{min-height:120px;resize:vertical}
+.hxhero{background:linear-gradient(135deg,rgba(131,58,180,.22),rgba(253,29,29,.14),rgba(252,175,69,.18))}
+.hxch{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.hxc{border:1px solid var(--gb);background:var(--in);color:var(--tx);border-radius:16px;padding:10px 4px;font:600 12px inherit;font-family:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px}
+.hxc span{font-size:22px}
+.hxc.on{border-color:#e1306c;box-shadow:0 0 0 2px rgba(225,48,108,.25);background:linear-gradient(135deg,rgba(131,58,180,.2),rgba(252,175,69,.18))}
+.hxr{display:flex;gap:8px;margin-bottom:12px}
+.hxr button{flex:1;font-size:26px;padding:10px 0;border-radius:16px;border:1px solid var(--gb);background:var(--in);opacity:.55;cursor:pointer}
+.hxr button.on{opacity:1;transform:scale(1.08);border-color:#e1306c;box-shadow:0 0 0 2px rgba(225,48,108,.25)}
+.hxs{display:flex;margin:10px 0 4px}
+.hxs div{flex:1;text-align:center;font-size:11px;color:var(--mu)}
+.hxs i{display:block;width:14px;height:14px;border-radius:50%;background:var(--in);border:2px solid var(--gb);margin:0 auto 4px}
+.hxs .on{color:var(--tx);font-weight:700}
+.hxs .on i{background:linear-gradient(135deg,#833ab4,#fd1d1d);border-color:transparent}
+.hxrep{background:var(--in);border-left:3px solid #e1306c;border-radius:12px;padding:10px 12px;margin-top:8px;font-size:13px}
+.hxrep b{display:block;font-size:11px;color:#e1306c;margin-bottom:2px}
+.hxbar{height:8px;border-radius:9px;background:var(--in);overflow:hidden;flex:1}
+.hxbar i{display:block;height:100%;background:linear-gradient(90deg,#833ab4,#fd1d1d,#fcaf45)}
+
+/* ===== HOF animations: same colors, smoother and more premium ===== */
+html{scroll-behavior:smooth}
+*{-webkit-tap-highlight-color:transparent}
+button,.cr,.btn,.sv{touch-action:manipulation}
+@media (prefers-reduced-motion:no-preference){
+@keyframes hxrise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes hxslide{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
+@keyframes hxgrow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes hxfade{from{opacity:0}to{opacity:1}}
+@keyframes hxup{from{opacity:0;transform:translateY(40px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes hxbob{0%{transform:scale(1)}35%{transform:translateY(-5px) scale(1.25)}70%{transform:translateY(1px) scale(.95)}100%{transform:none}}
+@keyframes hxshine{0%,55%{transform:translateX(-130%)}100%{transform:translateX(130%)}}
+@keyframes hxfloat{from{transform:translate(0,0) scale(1)}to{transform:translate(-40px,30px) scale(1.15)}}
+@keyframes hxglow{0%,100%{box-shadow:0 0 0 0 rgba(76,184,255,.5)}50%{box-shadow:0 0 0 8px rgba(76,184,255,0)}}
+@keyframes hxping{0%{box-shadow:0 0 0 0 rgba(255,59,59,.6)}100%{box-shadow:0 0 0 9px rgba(255,59,59,0)}}
+@keyframes hxcoin{0%{opacity:0;transform:translate(-50%,10px) scale(.6)}20%{opacity:1;transform:translate(-50%,-10px) scale(1.15)}100%{opacity:0;transform:translate(-50%,-90px) scale(1)}}
+@keyframes hxpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+@keyframes hxorb1{from{transform:translate(0,0)}to{transform:translate(-60px,50px)}}
+@keyframes hxorb2{from{transform:translate(0,0)}to{transform:translate(50px,-60px)}}
+
+/* page enter: only when the screen changes (class added by JS) */
+.hx-in>*{opacity:0;animation:hxrise .55s cubic-bezier(.2,.8,.2,1) .25s forwards}
+.hx-in>*:nth-child(1){animation-delay:.02s}
+.hx-in>*:nth-child(2){animation-delay:.07s}
+.hx-in>*:nth-child(3){animation-delay:.12s}
+.hx-in>*:nth-child(4){animation-delay:.17s}
+.hx-in>*:nth-child(5){animation-delay:.21s}
+.hx-in>*:nth-child(6){animation-delay:.25s}
+.hx-in>*:nth-child(7){animation-delay:.29s}
+.hx-in>*:nth-child(8){animation-delay:.33s}
+.hx-in>*:nth-child(9){animation-delay:.36s}
+.hx-in>*:nth-child(10){animation-delay:.39s}
+.hx-in>*:nth-child(11){animation-delay:.42s}
+.hx-in>*:nth-child(12){animation-delay:.45s}
+.hx-in .hs>*{opacity:0;animation:hxslide .5s cubic-bezier(.2,.8,.2,1) .2s forwards}
+.hx-in .hs>*:nth-child(2){animation-delay:.28s}
+.hx-in .hs>*:nth-child(3){animation-delay:.36s}
+.hx-in .hs>*:nth-child(n+4){animation-delay:.44s}
+.hx-in .pod>.g{opacity:0;animation:hxrise .65s cubic-bezier(.2,.9,.3,1.1) .2s forwards}
+.hx-in .pod>.g.p1{animation-delay:.38s}
+.hx-in .bar i,.hx-in .hxbar i{transform-origin:left;animation:hxgrow .95s cubic-bezier(.2,.8,.2,1) .3s both}
+
+/* touch feedback */
+.btn,.ib,.sv,.hxc,.hxr button,.nav button,.cr{transition:transform .16s ease,box-shadow .2s ease,opacity .2s,background .25s,color .25s}
+.btn:active:not(:disabled),.ib:active,.sv:active,.hxc:active,.hxr button:active{transform:scale(.95)}
+.nav button:active{transform:scale(.9)}
+.g[onclick]:active,.cr:active{transform:scale(.985)}
+.nav button.hx-pop span{animation:hxbob .55s ease}
+
+/* shine on the main call-to-action buttons */
+.btn.w:not(.o):not(.k):not(:disabled){position:relative;overflow:hidden}
+.btn.w:not(.o):not(.k):not(:disabled)::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.38) 50%,transparent 70%);animation:hxshine 4.5s ease-in-out infinite}
+
+/* living header + soft background depth */
+.hd{position:relative;overflow:hidden}
+.hd>*{position:relative;z-index:1}
+.hd::before{content:"";position:absolute;width:280px;height:280px;border-radius:50%;top:-90px;right:-70px;background:radial-gradient(circle,rgba(76,184,255,.5),transparent 65%);animation:hxfloat 9s ease-in-out infinite alternate;pointer-events:none}
+body::before,body::after{content:"";position:fixed;z-index:-1;border-radius:50%;pointer-events:none}
+body::before{width:380px;height:380px;left:-140px;top:30%;background:radial-gradient(circle,rgba(76,184,255,.22),transparent 68%);animation:hxorb1 14s ease-in-out infinite alternate}
+body::after{width:340px;height:340px;right:-120px;bottom:5%;background:radial-gradient(circle,rgba(30,144,230,.2),transparent 68%);animation:hxorb2 17s ease-in-out infinite alternate}
+
+/* small details */
+.r1{animation:hxglow 2.4s ease-in-out infinite}
+.dot{animation:hxping 1.6s ease-out infinite}
+.bd2{animation:hxpulse 2s ease-in-out infinite}
+.dots i{transition:width .35s cubic-bezier(.3,.9,.3,1),background .3s,opacity .3s}
+.logo b{display:inline-block;animation:hxpulse 3.2s ease-in-out infinite}
+#toast{transition:transform .5s cubic-bezier(.34,1.45,.5,1),opacity .3s;opacity:0}
+#toast.on{opacity:1}
+.sheet{animation:hxfade .25s ease}
+.sheet>.g{animation:hxup .4s cubic-bezier(.2,.9,.3,1.05)}
+.hxcoin{position:fixed;left:50%;top:38%;z-index:60;font-size:34px;font-weight:800;pointer-events:none;color:var(--ac2);text-shadow:0 4px 20px rgba(76,184,255,.6);animation:hxcoin 1.3s ease-out forwards}
+.hxcoinp{animation:hxbob .6s ease}
+
+/* chat: only brand-new messages animate (JS adds .nw) */
+.cm .bb.nw{animation:hxin .22s ease-out}
+.cm .bb.hrt.nw{animation:hxpop .4s}
+}
+@media (prefers-reduced-motion:reduce){
+.hd::before,body::before,body::after{display:none}
+}
+
+/* ===== Splash (video style), sliding nav circle, growth cards ===== */
+#hxsp{position:fixed;inset:0;z-index:999;background:#000;display:flex;align-items:center;justify-content:center;animation:hxsp 2.4s ease forwards}
+#hxsp img{width:124px;height:124px;border-radius:30px;opacity:0;animation:hxlogo 1.3s cubic-bezier(.2,.8,.2,1) .15s forwards,hxglw 1.4s ease-in-out .15s infinite alternate}
+@keyframes hxsp{0%,76%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden}}
+@keyframes hxlogo{from{opacity:0;transform:scale(.82);filter:brightness(.25)}to{opacity:1;transform:none;filter:none}}
+@keyframes hxglw{from{box-shadow:0 0 24px rgba(76,184,255,.18)}to{box-shadow:0 0 80px rgba(76,184,255,.55)}}
+@media (prefers-reduced-motion:reduce){#hxsp{display:none}}
+
+.nav{overflow:visible}
+.nav .hxni{position:absolute;left:0;top:-18px;width:66px;height:66px;border-radius:50%;background:#05080d;border:1.5px solid rgba(76,184,255,.45);box-shadow:0 0 0 5px var(--pg),0 10px 24px rgba(0,0,0,.45);transition:transform .5s cubic-bezier(.34,1.35,.5,1),opacity .3s;pointer-events:none;z-index:0}
+.nav button{position:relative;z-index:1}
+.nav button.on{background:transparent!important;color:#fff!important;transform:translateY(-7px)}
+.nav button.on span{transform:scale(1.12)}
+.nav button span{transition:transform .3s}
+
+.gxl{display:inline-block;margin-top:4px;padding:2px 10px;border-radius:99px;font-size:11px;font-weight:700;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25)}
+.gxn{text-align:left}
+.gxt{display:block;font-size:34px;font-weight:700;letter-spacing:1px;font-variant-numeric:tabular-nums;margin:2px 0}
+.gxw,.gxp{background:linear-gradient(135deg,rgba(76,184,255,.2),rgba(30,144,230,.1))}
+.gxds{display:flex;gap:6px;margin:12px 0}
+.gxd{flex:1;text-align:center}
+.gxd i{display:flex;align-items:center;justify-content:center;height:36px;border-radius:12px;background:var(--in);border:1px solid var(--gb);font-style:normal;font-weight:700;font-size:13px;color:var(--mu)}
+.gxd small{display:block;font-size:9.5px;color:var(--mu);margin-top:3px}
+.gxd.on i{background:linear-gradient(135deg,#4cb8ff,#1e90e6);color:#fff;border-color:transparent}
+.gxd.now i{border-color:var(--ac);color:var(--tx);animation:hxglow 1.8s ease-in-out infinite}
+.gxpulse i{animation:hxglow 1.4s ease-in-out infinite}
+</style>
+</head>
 <body>
+<div id="hxsp" aria-hidden="true"><img src="icon-192.png" alt=""></div><script>try{if(sessionStorage.getItem("hxs"))document.getElementById("hxsp").remove();else sessionStorage.setItem("hxs","1")}catch(e){}</script>
 <div class="wrap">
  <div class="sw g" role="tablist"><button data-m="user" onclick="setMode('user')">User app</button><button data-m="admin" onclick="setMode('admin')">Admin panel</button></div>
  <div id="app"></div>
@@ -232,14 +404,8 @@ ${pay.step?`<div class="g card"><div class="row"><span class="sp m">Method</span
 const ppl=()=>{const r=S.people.filter(p=>(p.id+p.n).toLowerCase().includes(q.toLowerCase()));return r.map(p=>`<div class="g card row" onclick="chat=S.people.find(x=>x.id==='${p.id}');render()" style="cursor:pointer"><div class="av" style="width:42px;height:42px;font-size:17px;border-radius:15px;margin:0">${esc(p.n[0])}</div><div class="sp"><b style="font-size:14px">${esc(p.n)}</b><div class="m">${p.id}</div></div></div>`).join('')||'<p class="m">No player found with that ID.</p>'};
 
 /* ---------- USER ACTIONS ---------- */
-function buy(k,id){if(k==='scrim'){const s=S.scrims.find(x=>x.id===id);order={kind:k,id,amt:s.fee,label:'Scrim slot, '+s.t+' '+s.map}}else{const p=S.plans.find(x=>x.id===id);order={kind:k,id,amt:p.p,label:p.n+' membership'}}pay.step=0;go('pay')}
 function claim(id){const t=S.tasks.find(x=>x.id===id);t.d=1;S.coins+=parseInt(t.r)||0;save();toast('Reward added');render()}
-function send(){const i=$('#mi');if(!i.value.trim())return;(S.msgs[chat.id]=S.msgs[chat.id]||[]).push({me:1,t:i.value.trim()});save();render();$('#mi').focus()}
 function confirmP(){const n=$('#pn').value.trim();if(!/^03\d{9}$/.test(n)){toast('Enter an 11-digit number starting with 03');return}pay.num=n;pay.step=1;render()}
-function doPay(){const d=new Date().toLocaleString('en-GB',{dateStyle:'medium',timeStyle:'short'});rc={no:'SZ'+Math.floor(100000+Math.random()*899999),label:order.label,amt:order.amt,m:pay.m,num:pay.num.slice(0,4)+'****'+pay.num.slice(-3),date:d};
-if(order.kind==='scrim')S.scrims.find(x=>x.id===order.id).got++;else S.member=S.plans.find(x=>x.id===order.id).n;
-S.hist.unshift({label:rc.label,amt:rc.amt,m:rc.m,date:d});save();order=null;pay.step=0;render()}
-function startCar(){clearInterval(ct);ci=0;ct=setInterval(()=>{const t=$('#car');if(!t){clearInterval(ct);return}ci=(ci+1)%S.banners.length;t.style.transform=`translateX(-${ci*100}%)`;document.querySelectorAll('.dots i').forEach((d,i)=>d.classList.toggle('on',i===ci))},3000)}
 
 /* ---------- ADMIN ---------- */
 const AD={scrims:['Scrim slots',['t:Time (8:00 PM)','map:Map','fee:Fee (Rs)','cap:Total slots'],x=>`${x.t} · ${x.map} · ${rs(x.fee)} · ${x.got}/${x.cap}`],
@@ -257,9 +423,6 @@ function addN(){const f=$('#f-news-img').files[0];if(!f){toast('Choose a thumbna
 function delI(k,id){S[k]=S[k].filter(x=>x.id!==id);save();render()}
 function addR(){const n=$('#rt').value.trim(),p=parseInt($('#rp').value),k=parseInt($('#rk').value)||0;if(!n||!p){toast('Enter team and placement');return}const add=(pts[p-1]||0)+k;let t=S.lb.find(x=>x.n.toLowerCase()===n.toLowerCase());t?t.p+=add:S.lb.push({n,p:add});save();toast(n+' +'+add+' pts');render()}
 
-function render(){document.querySelectorAll('.sw button').forEach(b=>b.classList.toggle('on',b.dataset.m===mode));const a=$('#app');
-if(mode==='admin'){a.innerHTML=admin();return}
-a.innerHTML=(view==='login'?'':head())+'<main>'+(V[view]||V.home)()+'</main>'+(view==='login'?'':nav());if(view==='home')startCar()}
 const AVC=['#4cb8ff,#0b1220','#1e90e6,#9fd6ff','#0b1220,#4cb8ff'];
 const av=(p,s)=>`<div class="ca" style="width:${s}px;height:${s}px;font-size:${Math.round(s*.4)}px;background:linear-gradient(135deg,${AVC[p.n.length%3]})">${esc(p.n[0])}</div>`;
 const last=p=>{const m=S.msgs[p.id]||[];return m[m.length-1]};
@@ -282,7 +445,6 @@ return `<div class="hd"><div class="row"><div class="sp"><div class="hn">${esc(m
 <h3>Tournament news</h3><div class="sn" onscroll="dts(this)">${S.news.map(n=>`<div class="nc" style="${n.img?`background-image:url(${n.img})`:'background:linear-gradient(135deg,#4cb8ff,#0b1220)'}">${n.t?`<div><b>${esc(n.t)}</b><span>${esc(n.s||'')}</span></div>`:''}${regBtn(n)}</div>`).join('')}</div>${dotsH(S.news.length)}
 ${(S.mine||[]).length?`<h3>My bookings</h3>`+S.mine.slice(0,3).map(b=>`<div class="g card"><div class="row"><div class="sp"><b style="font-size:14px">${esc(b.label)}</b><div class="m">Booked ${esc(b.date)}</div></div><span class="tag">Confirmed</span></div>${roomBox(b)}</div>`).join(''):''}<h3 id="sc">Book a scrim</h3><div class="sn" onscroll="dts(this)">${S.scrims.map(s=>{const f=s.got>=s.cap;return `<div class="oc"><div class="oh">${esc(s.t)} · ${esc(s.map)}</div><div class="ob"><div class="sp"><div class="orow"><span>MAP</span><b>${esc(s.map)}</b></div><div class="orow"><span>SLOTS</span><b>${s.got}/${s.cap}</b></div></div><div class="pr"><b>${rs(s.fee)}</b><span>per slot</span></div></div><div class="oa"><div class="bar"><i style="width:${Math.min(100,s.got/s.cap*100)}%"></i></div><button class="btn k w" ${f?'disabled':''} onclick="buy('scrim',${s.id})">${f?'SLOTS FULL':'BOOK SLOT'}</button></div></div>`}).join('')}</div>${dotsH(S.scrims.length)}
 <h3 id="gs">Gear shop</h3><div class="car"><div id="car">${S.banners.map((b,i)=>`<div class="sl" onclick="openProd(${i})" style="${b.img?`background:linear-gradient(transparent 40%,rgba(0,0,0,.6)),url(${b.img}) center/cover`:`background:linear-gradient(135deg,${GR[i%5]})`}"><b>${esc(b.t)}</b><span>${esc(b.s)}</span></div>`).join('')}</div></div>${dotsH(S.banners.length,'gd')}`};
-function render(){document.querySelectorAll('.sw button').forEach(b=>b.classList.toggle('on',b.dataset.m===mode));const a=$('#app');if(mode==='admin'){a.innerHTML=admin();return}const lg=view==='login';a.innerHTML=(lg||view==='home'?'':head2())+'<main>'+(V[view]||V.home)()+'</main>'+(lg?'':nav2());if(view==='home')startCar()}
 let role=null,rz=0;
 (()=>{const d=new Date().toDateString();if(S.day!==d){S.day=d;S.tasks.forEach(t=>t.d=0);save()}})();
 function buy(k,id){if(k==='scrim'){if((S.mine||[]).some(b=>b.sid===id)){toast('You already booked this slot');return}const s=S.scrims.find(x=>x.id===id);order={kind:k,id,amt:s.fee,label:'Scrim slot, '+s.t+' '+s.map}}else{const p=S.plans.find(x=>x.id===id);order={kind:k,id,amt:p.p,label:p.n+' membership'}}pay.step=0;go('pay')}
@@ -291,7 +453,6 @@ function addN2(k){const f=$('#f-'+k+'-img').files[0];if(!f){toast('Choose an ima
 function addPS(){const g=i=>Number($('#ps'+i).value)||0;S.me.m+=g(0);S.me.w+=g(1);S.me.k+=g(2);save();toast('Player stats updated');render()}
 function gate(){return `<div class="hd mini"><div class="logo">Admin <b>login</b></div></div><div class="g card"><b>Enter PIN</b><p class="m" style="margin:4px 0 10px">Admin or super admin PIN</p><input id="pin" type="password" inputmode="numeric" maxlength="6" placeholder="PIN" aria-label="PIN" onkeydown="if(event.key==='Enter')tryPin()"><button class="btn w" onclick="tryPin()">Open panel</button><p class="m" style="margin-top:12px">Demo PINs: admin 1234, super admin 9999. They only work in this preview and are not secure. Real logins need a backend.</p></div>`}
 function tryPin(){const p=$('#pin').value;role=p==='9999'?'super':p==='1234'?'admin':null;role?render():toast('Wrong PIN')}
-function adm2(){return `<h3>Update player stats</h3><div class="g card"><input id="ps0" inputmode="numeric" placeholder="Matches played (+)"><input id="ps1" inputmode="numeric" placeholder="Matches won (+)"><input id="ps2" inputmode="numeric" placeholder="Scrim kills (+)"><button class="btn w" onclick="addPS()">Add to ${esc(S.me.name)}</button></div>`+(role==='super'?`<h3>Payments received</h3>${S.hist.map(h=>`<div class="g card row"><div class="sp"><b style="font-size:13px">${esc(h.label)}</b><div class="m">${esc(h.date)} · ${esc(h.m)}</div></div><b>${rs(h.amt)}</b></div>`).join('')||'<p class="m">No payments yet.</p>'}<button class="btn o w" style="margin-top:10px" onclick="if(rz){S=JSON.parse(JSON.stringify(def));save();rz=0;toast('Data reset');render()}else{rz=1;toast('Tap again to confirm reset')}">Reset demo data</button>`:'')+`<button class="btn k w" style="margin:14px 0 6px" onclick="role=null;render()">Log out (${role==='super'?'Super admin':'Admin'})</button>`}
 function render(){document.querySelectorAll('.sw button').forEach(b=>b.classList.toggle('on',b.dataset.m===mode));const a=$('#app');if(mode==='admin'){a.innerHTML=role?admin():gate();return}const lg=view==='login';a.innerHTML=(lg||view==='home'?'':head2())+'<main>'+(V[view]||V.home)()+'</main>'+(lg?'':nav2());if(view==='home')startCar()}
 window.addEventListener('error',ev=>{const a=document.getElementById('app');if(a&&(!ready||!uid))a.innerHTML='<div class="g card" style="margin-top:20px"><b>App error</b><p class="m" style="margin-top:6px">'+String(ev.message).replace(/</g,'&lt;')+'</p><p class="m" style="margin-top:6px">Send a screenshot of this message to Claude.</p></div>'});
 window.addEventListener('unhandledrejection',ev=>{try{toast(String((ev.reason&&ev.reason.message)||ev.reason))}catch(e){}});
@@ -305,50 +466,8 @@ const tm=d=>new Date(d).toLocaleTimeString('en-US',{hour:'numeric',minute:'2-dig
 const dt=d=>new Date(d).toLocaleString('en-GB',{dateStyle:'medium',timeStyle:'short'});
 const shrink=(f,mx)=>new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const w=Math.min(mx,im.width),c=document.createElement('canvas');c.width=w;c.height=Math.round(im.height*w/im.width);c.getContext('2d').drawImage(im,0,0,c.width,c.height);c.toBlob(b=>b?ok(b):no(new Error('Image error')),'image/jpeg',.8)};im.onerror=()=>no(new Error('Image error'));im.src=r.result};r.readAsDataURL(f)});
 
-async function loadAll(){
- const today=new Date().toISOString().slice(0,10);
- const q=await Promise.all([
-  sb.from('profiles').select('*').eq('id',uid).single(),
-  sb.from('scrims').select('*').eq('active',true).order('id'),
-  sb.from('scrim_slots').select('*'),
-  sb.from('plans').select('*').order('id'),
-  sb.from('tasks').select('*').eq('active',true).order('id'),
-  sb.from('task_claims').select('task_id').eq('day',today),
-  sb.from('news').select('*').order('id',{ascending:false}),
-  sb.from('banners').select('*').order('id',{ascending:false}).limit(5),
-  sb.from('lb').select('*').order('points',{ascending:false}),
-  sb.from('payments').select('*').eq('user_id',uid).order('id',{ascending:false}).limit(30),
-  sb.from('bookings').select('*,scrims(time_label,map)').eq('user_id',uid).order('id',{ascending:false}),
-  sb.from('public_players').select('*').neq('id',uid).limit(200),
-  sb.from('messages').select('*').or('sender.eq.'+uid+',receiver.eq.'+uid).order('created_at').limit(500)]);
- const [P,SC,SL,PL,TK,CL,NW,BN,LB,PY,BK,PP,MS]=q;
- if(P.error||!P.data){toast('Could not load your profile');return false}
- const p=P.data,tk=SL.data||[];
- role=p.role==='user'?null:p.role;vSync=p.visible;
- S.me={uid,name:p.name,id:p.player_id,bio:p.bio,m:p.matches,w:p.wins,k:p.kills,vis:p.visible};
- S.coins=p.coins;S.member=p.member;
- S.scrims=(SC.data||[]).map(s=>({id:s.id,t:s.time_label,map:s.map,fee:s.fee,cap:s.cap,got:((tk.find(x=>x.scrim_id===s.id)||{}).taken)||0}));
- S.plans=(PL.data||[]).map(x=>({id:x.id,n:x.name,p:x.price,d:x.description}));
- const done=(CL.data||[]).map(x=>x.task_id);
- S.tasks=(TK.data||[]).map(x=>({id:x.id,t:x.title,r:x.reward+' coins',d:done.includes(x.id)?1:0}));
- const im=x=>({id:x.id,t:x.title,s:x.subtitle,img:x.image_url});
- S.news=(NW.data||[]).map(im);S.banners=(BN.data||[]).map(im);
- S.lb=(LB.data||[]).map(x=>({n:x.team,p:x.points}));
- S.mine=(BK.data||[]).map(b=>({sid:b.scrim_id,label:b.scrims?b.scrims.time_label+' \u00b7 '+b.scrims.map:'Scrim',date:dt(b.created_at)}));
- S.hist=(PY.data||[]).map(y=>{const pl=S.plans.find(x=>x.id===y.ref_id),sc=S.scrims.find(x=>x.id===y.ref_id);const l=y.kind==='plan'?(pl?pl.n+' membership':'Membership'):(sc?'Scrim '+sc.t+' '+sc.map:'Scrim slot');return{l0:l,label:l+' ('+y.status+')',st:y.status,amt:y.amount,m:y.method,date:dt(y.created_at)}});
- S.people=(PP.data||[]).map(x=>({id:x.player_id,uid:x.id,n:x.name}));
- S.msgs={};(MS.data||[]).forEach(m=>{const o=m.sender===uid?m.receiver:m.sender,pe=S.people.find(x=>x.uid===o);if(!pe)return;(S.msgs[pe.id]=S.msgs[pe.id]||[]).push({me:m.sender===uid?1:0,t:m.body,h:tm(m.created_at),i:+new Date(m.created_at)})});
- if(role){const r=await sb.from('payments').select('*,profiles(name,player_id)').order('id',{ascending:false}).limit(100);S.allpay=r.data||[]}
- return true}
 
 async function boot(){try{await boot2()}catch(e){ready=true;document.getElementById('app').innerHTML='<div class="g card" style="margin-top:20px"><b>Connection error</b><p class="m" style="margin-top:6px">'+String(e.message).replace(/</g,'&lt;')+'</p><p class="m" style="margin-top:6px">Send a screenshot of this message to Claude.</p></div>'}}
-async function boot2(){
- const r=await sb.auth.getSession(),s=r.data&&r.data.session;
- ready=true;
- if(!s){uid=null;render();return}
- uid=s.user.id;await loadAll();
- if(!chan){chan=sb.channel('hof-msgs').on('postgres_changes',{event:'INSERT',schema:'public',table:'messages',filter:'receiver=eq.'+uid},e=>{const m=e.new,pe=S.people.find(x=>x.uid===m.sender);if(!pe)return;(S.msgs[pe.id]=S.msgs[pe.id]||[]).push({me:0,t:m.body,h:tm(m.created_at),i:Date.now()});if(view==='chat'&&chat&&chat.id===pe.id)render();else toast('New message from '+pe.n)}).subscribe()}
- render()}
 
 /* auth screen */
 V.auth=()=>`<div class="g card" style="margin-top:40px;text-align:center;padding:26px 18px"><img src="icon-192.png" alt="HOF" style="width:88px;height:88px;border-radius:22px;margin-bottom:6px"><p class="m" style="margin:2px 0 16px">House of Champions</p>${am==='up'?'<input id="an" placeholder="Player name" aria-label="Player name">':''}<input id="ae" type="email" placeholder="Email" aria-label="Email" autocomplete="email"><input id="ap" type="password" placeholder="Password (6+ characters)" aria-label="Password" autocomplete="${am==='up'?'new-password':'current-password'}"><button class="btn w" onclick="doAuth()">${am==='up'?'Create account':'Log in'}</button><button class="btn o w" style="margin-top:8px" onclick="am=am==='up'?'in':'up';render()">${am==='up'?'I already have an account':'New here? Sign up'}</button></div>`;
@@ -391,11 +510,6 @@ addN2=async function(k){const f=$('#f-'+k+'-img').files[0];if(!f){toast('Choose 
  const url=sb.storage.from('media').getPublicUrl(p).data.publicUrl,r=await sb.from(k).insert({title:$('#f-'+k+'-0').value.trim(),subtitle:$('#f-'+k+'-1').value.trim(),image_url:url});if(r.error)throw r.error;toast('Uploaded');await loadAll();render()}catch(e){toast(e.message||'Upload failed')}};
 addR=async function(){const n=$('#rt').value.trim(),p=parseInt($('#rp').value),k=parseInt($('#rk').value)||0;if(!n||!p){toast('Enter team and placement');return}const r=await sb.rpc('add_result',{team_name:n,place:p,kills:k});toast(r.error?r.error.message:'Leaderboard updated');await loadAll();render()};
 addPS=async function(){const g=i=>Number($('#ps'+i).value)||0,pid=$('#ps3').value.trim();const u=await sb.from('profiles').select('id').eq('player_id',pid).single();if(u.error){toast('Player ID not found');return}const r=await sb.rpc('add_player_stats',{uid:u.data.id,m:g(0),w:g(1),k:g(2)});toast(r.error?r.error.message:'Player stats updated');await loadAll();render()};
-function adm2(){const all=S.allpay||[],pend=all.filter(p=>p.status==='pending'),who=p=>p.profiles?esc(p.profiles.name)+' \u00b7 '+esc(p.profiles.player_id):'';
- return `<h3>Pending payments (${pend.length})</h3>`+(pend.map(p=>`<div class="g card"><div class="row"><b class="sp" style="font-size:13px">${who(p)}</b><b>${rs(p.amount)}</b></div><div class="m" style="margin:4px 0 8px">${esc(p.method)} \u00b7 from ${esc(p.sender_number)} \u00b7 TID ${esc(p.txn_id)} \u00b7 ${p.kind==='plan'?'Membership':'Scrim slot'}</div><div class="row">${p.screenshot_path?`<button class="btn o" onclick="viewSS('${esc(p.screenshot_path)}')">Screenshot</button>`:''}<span class="sp"></span><button class="btn o" onclick="rej(${p.id})">Reject</button><button class="btn" onclick="apr(${p.id})">Approve</button></div></div>`).join('')||'<p class="m">No pending payments.</p>')
- +`<h3>Update player stats</h3><div class="g card"><input id="ps3" placeholder="Player ID (FF-123456)" aria-label="Player ID"><input id="ps0" inputmode="numeric" placeholder="Matches played (+)"><input id="ps1" inputmode="numeric" placeholder="Matches won (+)"><input id="ps2" inputmode="numeric" placeholder="Scrim kills (+)"><button class="btn w" onclick="addPS()">Add stats</button></div>`
- +(role==='super'?`<h3>All payments</h3>`+all.filter(p=>p.status!=='pending').slice(0,30).map(p=>`<div class="g card row"><div class="sp"><b style="font-size:13px">${who(p)}</b><div class="m">${esc(p.method)} \u00b7 TID ${esc(p.txn_id)}</div></div><div style="text-align:right"><b>${rs(p.amount)}</b><br><span class="tag ${p.status==='rejected'?'f':''}">${esc(p.status)}</span></div></div>`).join(''):'')
- +`<button class="btn k w" style="margin:14px 0 6px" onclick="mode='user';render()">Back to user app</button>`}
 
 /* render wrapper: loading, login screen, role-based admin access */
 const _r=render;
@@ -557,6 +671,460 @@ function adm2(){const all=S.allpay||[],pend=all.filter(p=>p.status==='pending'),
  +`<h3>Update player stats</h3><div class="g card"><input id="ps3" placeholder="Player ID (FF-123456)" aria-label="Player ID"><input id="ps0" inputmode="numeric" placeholder="Matches played (+)"><input id="ps1" inputmode="numeric" placeholder="Matches won (+)"><input id="ps2" inputmode="numeric" placeholder="Scrim kills (+)"><button class="btn w" onclick="addPS()">Add stats</button></div>`
  +(role==='super'?`<h3>All payments</h3>`+all.filter(p=>p.status!=='pending').slice(0,30).map(p=>`<div class="g card row"><div class="sp"><b style="font-size:13px">${who(p)}</b><div class="m">${esc(p.method)} \u00b7 TID ${esc(p.txn_id)}</div></div><div style="text-align:right"><b>${rs(p.amount)}</b><br><span class="tag ${p.status==='rejected'?'f':''}">${esc(p.status)}</span></div></div>`).join(''):'')
  +`<button class="btn k w" style="margin:14px 0 6px" onclick="mode='user';render()">Back to user app</button>`}
+
+/* ===== HOF v2 layer: Instagram-style chat, typing dots, scrim rooms, feedback ===== */
+let RM2=[],FB=[],FBA=[],rtCh=null;
+const TY={until:{},names:{},last:0,rk:null,rch:null,my:null,out:{}};
+const HXCOL=['#833ab4','#c13584','#e1306c','#fd1d1d','#f56040','#e8912d','#5851db','#405de6','#2bb673','#0095f6'];
+const hxHue=s=>{let h=0;for(const c of String(s||'?'))h=(h*31+c.charCodeAt(0))>>>0;return HXCOL[h%HXCOL.length]};
+const hxTyKey=p=>(p.g||p.sr)?keyOf(p):'u'+p.uid;
+const hxTyOn=k=>(TY.until[k]||0)>Date.now();
+window.addEventListener('error',e=>{window.__hxErr=String(e.message||'').slice(0,200)});
+
+/* ---------- scrim rooms ---------- */
+const hxLeft=end=>{const ms=end-Date.now();if(ms<=0)return 'closed';const m=Math.ceil(ms/60000),h=Math.floor(m/60);return (h?h+'h ':'')+(m%60)+'m left'};
+const hxRoomAv=s=>`<div class="ca" style="width:${s}px;height:${s}px;font-size:${Math.round(s*.45)}px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcaf45)">🎮</div>`;
+async function hxLoadRooms(force){
+ if(!uid)return false;
+ const r=await sb.rpc('my_scrim_rooms');
+ if(r.error||!Array.isArray(r.data)){if(RM2.length){RM2=[];return true}return false}
+ const sig=a=>JSON.stringify(a.map(x=>[x.sid,x.rid,x.rp,x.end]));
+ const old=sig(RM2);
+ RM2=r.data.map(x=>({sr:1,sid:x.scrim_id,id:'sr'+x.scrim_id,n:'Scrim '+x.label+' \u00b7 '+x.map,rid:x.room_id,rp:x.room_pass,end:+new Date(x.ends_at),mem:x.members}));
+ const changed=old!==sig(RM2);
+ Object.keys(S.msgs).forEach(k=>{if(/^sr\d+$/.test(k)&&!RM2.some(x=>x.id===k))delete S.msgs[k]});
+ if(RM2.length&&(force||changed)){
+  const c=await sb.from('scrim_chat').select('*').in('scrim_id',RM2.map(x=>x.sid)).order('created_at').limit(400);
+  RM2.forEach(x=>{S.msgs[x.id]=[]});
+  (c.data||[]).forEach(m=>{const k='sr'+m.scrim_id;if(!S.msgs[k])return;S.msgs[k].push({me:m.sender===uid?1:0,t:m.body,h:tm(m.created_at),i:+new Date(m.created_at),from:m.sender_name||'Player'})})}
+ return changed}
+function hxEnsureRt(){
+ if(!uid||rtCh)return;
+ rtCh=sb.channel('hof-rooms').on('postgres_changes',{event:'INSERT',schema:'public',table:'scrim_chat'},hxOnSM).subscribe()}
+function hxOnSM(e){
+ const m=e.new,rm=RM2.find(x=>x.sid===m.scrim_id);
+ if(!rm||m.sender===uid)return;
+ (S.msgs[rm.id]=S.msgs[rm.id]||[]).push({me:0,t:m.body,h:tm(m.created_at),i:Date.now(),from:m.sender_name||'Player'});
+ delete TY.until[rm.id];
+ const open=view==='chat'&&chat&&chat.id===rm.id&&!document.hidden;
+ if(open)setRd(rm.id);else alertMsg(rm.n+' \u00b7 '+(m.sender_name||'Player'),m.body);
+ render()}
+function hxCopy(t){try{navigator.clipboard.writeText(t).then(()=>toast('Copied ✅'),()=>hxCopy2(t))}catch(e){hxCopy2(t)}}
+function hxCopy2(t){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');toast('Copied ✅')}catch(e){toast('Copy failed')}a.remove()}
+function hxRoomCard(r){
+ return `<div class="rcard"><div class="rch"><b>🔑 Match room</b><span class="rmt">${hxLeft(r.end)}</span></div>`
+ +`<div class="rcr"><div><small>ROOM ID</small><b>${esc(r.rid||'-')}</b></div><button class="btn o" data-v="${esc(r.rid||'')}" onclick="hxCopy(this.dataset.v)">Copy</button></div>`
+ +`<div class="rcr"><div><small>PASSWORD</small><b>${esc(r.rp||'-')}</b></div><button class="btn o" data-v="${esc(r.rp||'')}" onclick="hxCopy(this.dataset.v)">Copy</button></div>`
+ +`<p class="m">${r.mem||''} players are in this room. It closes automatically when the match window ends.</p></div>`}
+
+/* ---------- typing indicator (Supabase broadcast, no database needed) ---------- */
+function hxTyStart(){
+ if(!uid||TY.my)return;
+ TY.my=sb.channel('ty_'+uid).on('broadcast',{event:'t'},e=>hxOnTy(e.payload||{})).subscribe()}
+function hxTyStop(){
+ try{TY.my&&sb.removeChannel(TY.my)}catch(e){}TY.my=null;
+ try{TY.rch&&sb.removeChannel(TY.rch)}catch(e){}TY.rch=null;TY.rk=null;
+ Object.values(TY.out).forEach(c=>{try{sb.removeChannel(c)}catch(e){}});TY.out={};TY.until={}}
+function hxOnTy(p){
+ if(!p.k||p.from===uid)return;
+ TY.until[p.k]=Date.now()+3500;TY.names[p.k]=p.name||'Someone';
+ hxUiTy();setTimeout(hxUiTy,3700)}
+function hxUiTy(){
+ if(view==='chat'&&chat){
+  const box=$('#typ');if(!box)return;
+  const k=hxTyKey(chat),on=hxTyOn(k);
+  if(on&&!box.firstChild){
+   box.innerHTML=((chat.g||chat.sr)?`<div class="hxn" style="color:${hxHue(TY.names[k])}">${esc(TY.names[k]||'Someone')} is typing</div>`:'')+'<div class="bb rb hxty"><i></i><i></i><i></i></div>';
+   scrollTo(0,document.body.scrollHeight)}
+  else if(!on)box.innerHTML=''}
+ else document.querySelectorAll('.cp[data-tk]').forEach(el=>{
+  const on=hxTyOn(el.dataset.tk);
+  if(on)el.innerHTML='<span class="hxtp">typing<b>.</b><b>.</b><b>.</b></span>';
+  else if(el.dataset.ty)el.textContent=el.dataset.o;
+  el.dataset.ty=on?'1':''})}
+function hxInp(el){
+ const b=$('#sb');if(b)b.textContent=el.value.trim()?'Send':'\u2764\ufe0f';
+ if(!chat||!uid||!el.value.trim())return;
+ const now=Date.now();if(now-TY.last<1800)return;TY.last=now;
+ const grp=chat.g||chat.sr,pl={type:'broadcast',event:'t',payload:{from:uid,name:(S.me&&S.me.name)||'Player',k:grp?keyOf(chat):'u'+uid}};
+ try{
+  if(grp){TY.rch&&TY.rch.send(pl)}
+  else{let c=TY.out[chat.uid];if(!c){c=TY.out[chat.uid]=sb.channel('ty_'+chat.uid);c.subscribe()}c.send(pl)}
+ }catch(e){}}
+function hxSyncTy(){
+ if(!uid)return;
+ hxTyStart();
+ const rk=(chat&&(chat.g||chat.sr))?keyOf(chat):null;
+ if(rk!==TY.rk){
+  try{TY.rch&&sb.removeChannel(TY.rch)}catch(e){}
+  TY.rch=null;TY.rk=rk;
+  if(rk)TY.rch=sb.channel('tyr_'+rk).on('broadcast',{event:'t'},e=>hxOnTy(e.payload||{})).subscribe()}
+ hxUiTy()}
+
+/* ---------- chat screens ---------- */
+thread=function(){
+ const m=msgsOf(chat),grp=!!(chat.g||chat.sr);
+ const sub=chat.sr?'Private room for booked players':chat.g?'Group chat':esc(chat.id)+(chat.st?' \u00b7 '+chat.st[2]+' kills':'');
+ const av=chat.sr?hxRoomAv(40):chat.g?gAv(40):avt(chat,40);
+ const same=(a,b)=>!!(a&&b&&a.me===b.me&&(!grp||a.from===b.from));
+ let h='';
+ m.forEach((x,i)=>{
+  const first=!same(m[i-1],x),last=!same(x,m[i+1]),heart=x.t==='\u2764\ufe0f';
+  if(grp&&!x.me&&first&&x.from)h+=`<div class="hxn" style="color:${hxHue(x.from)}">${esc(x.from)}</div>`;
+  const tint=(grp&&!x.me&&x.from&&!heart)?` style="background:${hxHue(x.from)}1f;border-color:${hxHue(x.from)}55"`:'';
+  h+=`<div class="bb ${x.me?'sb':'rb'} ${heart?'hrt':''} ${first?'f1':''} ${last?'l1':''}"${tint}>${esc(x.t)}</div>`;
+  if(last&&x.h)h+=`<div class="hxt ${x.me?'r':''}">${esc(x.h)}</div>`});
+ if(!h)h='<p class="m" style="text-align:center;padding:30px 0">Say hi to start the chat 👋</p>';
+ return `<div class="ch"><button class="ib" aria-label="Back" onclick="chat=null;render()">\u2190</button>${av}<div class="sp"><b style="font-size:15px">${esc(chat.n)}</b><div class="m" style="font-size:12px">${sub}</div></div></div>`
+ +(chat.sr?hxRoomCard(chat):'')
+ +`<div class="cm">${h}<div id="typ"></div></div>`
+ +`<div class="ci"><input id="mi" placeholder="Message\u2026" aria-label="Message" oninput="hxInp(this)" onkeydown="if(event.key==='Enter')send()"><button id="sb" aria-label="Send" onclick="send()">\u2764\ufe0f</button></div>`};
+V.chat=function(){
+ if(chat)return thread();
+ const it=[...RM2,...S.people,...S.groups].map(p=>({p,l:msgsOf(p).slice(-1)[0]}))
+  .sort((a,b)=>(b.p.sr?1:0)-(a.p.sr?1:0)||((b.l||{}).i||0)-((a.l||{}).i||0));
+ return `<div class="row" style="margin-bottom:10px"><h2 class="sp" style="margin:0">Chats</h2><button class="btn o" onclick="newGroup()">👥 New group</button></div>${storyRow()}`
+ +`<div class="row" style="margin:6px 0 10px"><input class="cs" id="fq" placeholder="Find a player by exact ID (FF-123456)" aria-label="Find player" style="margin:0" onkeydown="if(event.key==='Enter')findP()"><button class="btn" onclick="findP()">Find</button></div><div id="fr">${foundHtml()}</div><b style="font-size:14px">Messages</b>`
+ +(it.map(({p,l})=>{
+  const pv=l?(l.me?'You: ':((p.g||p.sr)&&l.from?l.from+': ':''))+l.t:(p.sr?'Room ID is pinned inside':p.g?'Group':p.id);
+  const u=unread(p);
+  return `<div class="cr ${p.sr?'live':''}" onclick="openK('${keyOf(p)}')">${p.sr?hxRoomAv(56):p.g?gAv(56):avt(p,56)}<div class="sp"><b>${esc(p.n)}${p.sr?'<span class="lv">LIVE</span>':''}</b><div class="m cp" data-tk="${hxTyKey(p)}" data-o="${esc(pv)}">${esc(pv)}</div></div>${u?`<span class="bd2">${u}</span>`:''}</div>`}).join('')||'<p class="m" style="padding:14px 4px">No chats yet. Find a friend by their ID to start.</p>')};
+openK=function(k){chat=RM2.find(x=>x.id===k)||S.groups.find(x=>'g'+x.id===k)||S.people.find(x=>x.id===k);if(chat)setRd(keyOf(chat));render()};
+
+/* sending: scrim room messages go to scrim_chat, everything else uses the existing send */
+const _hxSend=send;
+send=function(){
+ const i=$('#mi'),t=i?(i.value.trim()||'\u2764\ufe0f'):'';
+ let p;
+ if(chat&&chat.sr){
+  p=(async()=>{
+   const r=await sb.from('scrim_chat').insert({scrim_id:chat.sid,sender:uid,body:t});
+   if(r.error){toast('Message failed. The room may be closed.');await hxLoadRooms(1);render();return}
+   (S.msgs[chat.id]=S.msgs[chat.id]||[]).push({me:1,t,h:tm(Date.now()),i:Date.now()});
+   setRd(keyOf(chat));render();const n=$('#mi');if(n)n.focus();scrollTo(0,document.body.scrollHeight)})()}
+ else p=_hxSend.apply(this,arguments);
+ if(i){i.value='';const b=$('#sb');if(b)b.textContent='\u2764\ufe0f'}
+ delete TY.until[chat?hxTyKey(chat):''];
+ return p};
+
+/* keep the draft when something re-renders, and stay at the bottom in a chat */
+const _hxRender=render;
+render=function(){
+ const mi=$('#mi'),v=mi?mi.value:'',f=!!mi&&document.activeElement===mi;
+ _hxRender();
+ if(v){const n=$('#mi');if(n){n.value=v;if(f)n.focus();const b=$('#sb');if(b)b.textContent='Send'}}
+ try{hxSyncTy();hxEnsureRt()}catch(e){}
+ if(view==='chat'&&chat)scrollTo(0,document.body.scrollHeight)};
+const _hxInc=incoming;
+incoming=function(pe){delete TY.until[(pe.g||pe.sr)?keyOf(pe):'u'+pe.uid];return _hxInc.apply(this,arguments)};
+const _hxNT=onNT;
+onNT=async function(e){await _hxNT(e);setTimeout(()=>{hxLoadRooms(1).then(c=>{if(c&&view==='chat'&&!chat)render()});hxLoadFb().then(()=>{if(view==='feedback')render()})},2500)};
+const _hxLogin=V.login;
+V.login=()=>{hxTyStop();if(rtCh){try{sb.removeChannel(rtCh)}catch(e){}rtCh=null}RM2=[];FB=[];FBA=[];return _hxLogin()};
+const _hxLoadAll=loadAll;
+loadAll=async function(){const ok=await _hxLoadAll.apply(this,arguments);if(ok){await Promise.all([hxLoadRooms(1).catch(()=>0),hxLoadFb().catch(()=>0)])}return ok};
+
+/* room expiry + light polling */
+setInterval(()=>{
+ if(!uid)return;
+ const now=Date.now(),gone=RM2.filter(x=>x.end<=now);
+ if(gone.length){
+  RM2=RM2.filter(x=>x.end>now);gone.forEach(x=>delete S.msgs[x.id]);
+  if(chat&&chat.sr&&!RM2.some(x=>x.id===chat.id)){chat=null;toast('Scrim room closed. See you in the next match 🎮')}
+  if(view==='chat')render()}
+ else document.querySelectorAll('.rmt').forEach(el=>{if(chat&&chat.sr)el.textContent=hxLeft(chat.end)})},15000);
+setInterval(()=>{if(uid&&!document.hidden)hxLoadRooms(0).then(c=>{if(c&&view==='chat'&&!chat)render()}).catch(()=>0)},60000);
+
+/* admin: send IDP once -> notification + private scrim room that expires */
+sendIDP=async function(sid){
+ const rid=$('#rm'+sid).value.trim(),rp=$('#rp'+sid).value.trim(),mins=parseInt(($('#rd'+sid)||{}).value)||120;
+ if(!rid||!rp){toast('Enter room ID and password');return}
+ const r=await sb.rpc('release_room',{sid,rid,rpass:rp});
+ if(r.error){toast(r.error.message);return}
+ const o=await sb.rpc('open_scrim_room',{sid,mins});
+ toast(o.error?'IDP sent. Scrim room is not enabled yet (run the SQL update).':'Sent to booked players and scrim room opened for '+(mins/60)+'h');
+ await loadAll();render()};
+const _hxAdm2=adm2;
+adm2=function(){
+ let h=_hxAdm2();
+ h=h.replace(/<button class="btn w" onclick="sendIDP\((\d+)\)">/g,(m,id)=>`<div class="m" style="margin:2px 2px 6px">Match room chat stays open for</div><select class="sel" id="rd${id}"><option value="90">1.5 hours</option><option value="120" selected>2 hours</option><option value="180">3 hours</option><option value="240">4 hours</option></select>`+m);
+ const mk='<button class="btn k w" style="margin:14px 0 6px" onclick="mode=\'user\';render()">Back to user app</button>',fb=hxAdminFb();
+ return h.includes(mk)?h.replace(mk,()=>fb+mk):h+fb};
+
+/* ---------- feedback system ---------- */
+const HXC=[['payment','💳','Payment'],['room','🔑','Room / Scrim'],['chat','💬','Chat'],['bug','🐛','App bug'],['idea','💡','Idea'],['other','🙋','Other']];
+const HXE=['😡','😕','😐','🙂','🤩'];
+const HXF={cat:'payment',rate:0,msg:'',busy:0,file:null,fname:''};
+async function hxLoadFb(){
+ if(!uid)return;
+ const a=await sb.from('feedback').select('*').eq('user_id',uid).order('id',{ascending:false}).limit(20);
+ FB=a.error?[]:(a.data||[]);
+ if(role){const b=await sb.from('feedback').select('*,profiles(name,player_id)').order('id',{ascending:false}).limit(150);FBA=b.error?[]:(b.data||[])}}
+function hxFCat(c){HXF.cat=c;render()}
+function hxFRate(n){HXF.rate=HXF.rate===n?0:n;render()}
+function hxFFile(inp){HXF.file=inp.files[0]||null;HXF.fname=HXF.file?HXF.file.name:'';render()}
+async function hxFSend(){
+ const f=HXF,msg=f.msg.trim();
+ if(msg.length<5){toast('Please write a few words about the problem');return}
+ if(f.busy)return;f.busy=1;render();
+ try{
+  let shot=null;
+  if(f.file){try{const b=await shrink(f.file,1000),p='feedback/'+uid+'_'+Date.now()+'.jpg',u=await sb.storage.from('media').upload(p,b,{contentType:'image/jpeg'});if(!u.error)shot=sb.storage.from('media').getPublicUrl(p).data.publicUrl}catch(e){}}
+  const meta={screen:view,ua:String(navigator.userAgent).slice(0,140),online:navigator.onLine,size:innerWidth+'x'+innerHeight,lastError:window.__hxErr||null};
+  const r=await sb.from('feedback').insert({category:f.cat,rating:f.rate||null,message:msg,screenshot_url:shot,meta});
+  if(r.error)throw r.error;
+  f.msg='';f.file=null;f.fname='';f.rate=0;
+  toast('Thank you! We got your message ✅');await hxLoadFb()
+ }catch(e){toast(/relation|schema cache|does not exist/i.test(e.message||'')?'Feedback is being set up. Please try again soon.':(e.message||'Could not send'))}
+ f.busy=0;render()}
+async function hxFOk(id,ok){const r=await sb.rpc('confirm_feedback',{fid:id,ok});toast(r.error?r.error.message:(ok?'Great, thank you 💛':'Sorry about that. We will look again.'));await hxLoadFb();render()}
+function hxTicket(t){
+ const o=['new','reviewing','solved'].indexOf(t.status),c=HXC.find(x=>x[0]===t.category)||HXC[5];
+ const steps=[['Received',0],['In progress',1],['Solved',2]].map(s=>`<div class="${o>=s[1]?'on':''}"><i></i>${s[0]}</div>`).join('');
+ return `<div class="g card"><div class="row"><span class="tag">${c[1]} ${c[2]}</span><span class="sp"></span><span class="m">#${t.id} \u00b7 ${dt(t.created_at)}</span></div>`
+ +`<p style="margin:8px 0;font-size:14px">${esc(t.message)}</p><div class="hxs">${steps}</div>`
+ +(t.admin_reply?`<div class="hxrep"><b>HOF Team${t.replied_at?' \u00b7 '+dt(t.replied_at):''}</b>${esc(t.admin_reply)}</div>`:'')
+ +(t.status==='solved'&&t.user_ok==null?`<div class="row" style="margin-top:10px"><span class="m sp">Is your problem fixed?</span><button class="btn o" onclick="hxFOk(${t.id},false)">👎 Not yet</button><button class="btn" onclick="hxFOk(${t.id},true)">👍 Yes</button></div>`:'')
+ +(t.user_ok===true?'<div class="m" style="margin-top:8px">Thanks for confirming 💛</div>':'')
+ +(t.user_ok===false?'<div class="m" style="margin-top:8px">Reopened. We will look at it again.</div>':'')+'</div>'}
+V.feedback=function(){
+ const f=HXF;
+ return `<div class="row" style="margin-bottom:10px"><button class="ib" aria-label="Back" onclick="go('profile')">\u2190</button><h2 class="sp" style="margin:0">Help &amp; Feedback</h2></div>`
+ +`<div class="g card hxhero"><b>We read every message 💛</b><p class="m" style="margin-top:4px">Tell us what went wrong. Our team replies personally and you get a notification the moment it is fixed.</p></div>`
+ +`<h3>What is it about?</h3><div class="hxch">${HXC.map(c=>`<button class="hxc ${f.cat===c[0]?'on':''}" onclick="hxFCat('${c[0]}')"><span>${c[1]}</span>${c[2]}</button>`).join('')}</div>`
+ +`<h3>How is your experience?</h3><div class="hxr">${HXE.map((e,i)=>`<button class="${f.rate===i+1?'on':''}" aria-label="${i+1} of 5" onclick="hxFRate(${i+1})">${e}</button>`).join('')}</div>`
+ +`<textarea class="ta" id="fbm" maxlength="1000" placeholder="Describe the problem: what did you tap, what did you expect, what happened?" oninput="HXF.msg=this.value">${esc(f.msg)}</textarea>`
+ +`<label class="btn o w" style="display:block;text-align:center;margin-bottom:8px">📎 ${f.fname?esc(f.fname):'Attach a screenshot (optional)'}<input type="file" accept="image/*" style="display:none" onchange="hxFFile(this)"></label>`
+ +`<button class="btn w" ${f.busy?'disabled':''} onclick="hxFSend()">${f.busy?'Sending\u2026':'Send feedback'}</button>`
+ +`<h3>Your tickets</h3>`+(FB.map(hxTicket).join('')||'<p class="m">No tickets yet. When you send one, you can follow its progress here.</p>')};
+const _hxProf=V.profile;
+V.profile=function(){
+ const open=FB.filter(t=>t.status!=='solved').length;
+ return _hxProf()+`<h3>Need help?</h3><div class="g card row" style="cursor:pointer" onclick="go('feedback')"><span style="font-size:26px">💬</span><div class="sp"><b style="font-size:14px">Help &amp; Feedback</b><div class="m">${open?open+' open ticket'+(open>1?'s':''):'Tell us about any problem'}</div></div><span>\u203a</span></div>`};
+if(V.pay){const _hxPay=V.pay;V.pay=function(){return _hxPay()+`<div class="g card row" style="margin-top:10px;cursor:pointer" onclick="HXF.cat='payment';go('feedback')"><span style="font-size:24px">🛟</span><div class="sp"><b style="font-size:14px">Problem with a payment?</b><div class="m">Tell us. We check it personally.</div></div><span>\u203a</span></div>`}}
+const hxDev=ua=>{const m=/(Android [\d.]+|iPhone OS [\d_]+|Windows NT [\d.]+|Mac OS X [\d_]+)/.exec(ua||'');return m?m[1].replace(/_/g,'.'):'unknown device'};
+function hxAdminFb(){
+ const a=FBA,open=a.filter(t=>t.status!=='solved'),done=a.length-open.length;
+ const rated=a.filter(t=>t.rating),avg=rated.length?(rated.reduce((s,t)=>s+t.rating,0)/rated.length).toFixed(1):'-';
+ const cats=HXC.map(c=>[c,open.filter(t=>t.category===c[0]).length]).filter(x=>x[1]),mx=Math.max(1,...cats.map(x=>x[1]));
+ const who=t=>t.profiles?esc(t.profiles.name)+' \u00b7 '+esc(t.profiles.player_id):'Player';
+ return `<h3>Feedback inbox (${open.length} open)</h3><div class="grid"><div class="g st"><b>${open.length}</b><span class="m">Open</span></div><div class="g st"><b>${avg}</b><span class="m">Avg rating (${rated.length})</span></div></div>`
+ +(cats.length?`<div class="g card" style="margin-top:10px"><b style="font-size:13px">What users struggle with</b>${cats.map(([c,n])=>`<div class="row" style="margin-top:8px"><span style="width:96px;font-size:12px">${c[1]} ${c[2]}</span><div class="hxbar"><i style="width:${n/mx*100}%"></i></div><b style="width:22px;text-align:right">${n}</b></div>`).join('')}</div>`:'')
+ +(open.map(t=>{const c=HXC.find(x=>x[0]===t.category)||HXC[5],mt=t.meta||{};
+  return `<div class="g card"><div class="row"><b class="sp" style="font-size:13px">${who(t)}</b><span class="tag ${t.status==='new'?'f':''}">${t.status==='new'?'New':'In progress'}</span></div>`
+  +`<div class="m" style="margin:4px 0">${c[1]} ${c[2]} ${t.rating?'\u00b7 '+HXE[t.rating-1]:''} \u00b7 ${dt(t.created_at)}${t.user_ok===false?' \u00b7 reopened':''}</div>`
+  +`<p style="font-size:14px;margin:6px 0">${esc(t.message)}</p>`
+  +`<div class="m" style="font-size:11px;margin-bottom:8px">Screen: ${esc(mt.screen||'?')} \u00b7 ${esc(hxDev(mt.ua))}${mt.lastError?' \u00b7 error: '+esc(mt.lastError):''}</div>`
+  +(t.screenshot_url?`<button class="btn o" style="margin-bottom:8px" onclick="window.open('${esc(t.screenshot_url)}','_blank')">View screenshot</button>`:'')
+  +`<textarea class="ta" id="fr${t.id}" style="min-height:70px" placeholder="Write your reply to the player">${esc(t.admin_reply||'')}</textarea>`
+  +`<div class="row"><button class="btn o sp" onclick="hxFAct(${t.id},'reviewing')">Mark in progress</button><button class="btn sp" onclick="hxFAct(${t.id},'solved')">Reply &amp; solve</button></div></div>`}).join('')||'<p class="m">All clear. No open feedback 🎉</p>')
+ +(done?`<div class="m" style="margin:8px 2px">${done} solved ticket${done>1?'s':''} in the last ${a.length}.</div>`:'')}
+async function hxFAct(id,st){
+ const el=$('#fr'+id),reply=el?el.value.trim():'';
+ if(st==='solved'&&!reply){toast('Write a short reply so the player knows what we did');return}
+ const r=await sb.rpc('reply_feedback',{fid:id,new_status:st,reply});
+ toast(r.error?r.error.message:(st==='solved'?'Solved. Player notified ✅':'Marked in progress'));
+ await hxLoadFb();render()}
+
+/* ===== HOF growth: streak, scrim countdown, reminders, referral, levels, welcome, win-back, payment trust ===== */
+let GX=null;
+const GX_R=[5,5,10,10,15,20,50],GX_L=[['Rookie',0,'🥉'],['Pro',200,'🥈'],['Legend',600,'🏆']];
+const gxToday=()=>new Date(Date.now()+5*36e5).toISOString().slice(0,10);
+const gxFmt=ms=>{const s=Math.max(0,Math.floor(ms/1000));return [s/3600|0,(s%3600)/60|0,s%60].map(n=>String(n).padStart(2,'0')).join(':')};
+try{const q=new URLSearchParams(location.search).get('ref');if(q)localStorage.setItem('hx_ref',q.slice(0,20))}catch(e){}
+
+async function gxLoad(){
+ if(!uid)return;
+ const r=await sb.from('profiles').select('streak,best_streak,last_claim,streak_freeze,welcome_claimed,referred_by').eq('id',uid).single();
+ GX=r.error?null:r.data}
+async function gxSeen(){
+ try{const n=Date.now();if(n-(+sessionStorage.getItem('hx_seen')||0)<18e5)return 0;sessionStorage.setItem('hx_seen',n)}catch(e){}
+ const r=await sb.rpc('touch_seen');
+ if(!r.error&&r.data>0){toast('🎁 Welcome back! +'+r.data+' coins on us');return r.data}
+ return 0}
+async function gxRefAuto(){
+ let c;try{c=localStorage.getItem('hx_ref')}catch(e){}
+ if(!c||!GX)return;
+ try{localStorage.removeItem('hx_ref')}catch(e){}
+ if(GX.referred_by||c.toUpperCase()===String(S.me.id||'').toUpperCase())return;
+ const r=await sb.rpc('apply_referral',{code:c});
+ if(!r.error){toast('🤝 Friend code applied! +25 coins for you both');await loadAll();render()}}
+
+/* ---- daily streak ---- */
+function gxStreak(){
+ if(!GX)return null;
+ const lc=GX.last_claim,gap=lc?Math.round((Date.parse(gxToday())-Date.parse(lc))/864e5):null;
+ let eff=GX.streak||0;
+ if(gap===null||gap>2||(gap===2&&!GX.streak_freeze))eff=0;
+ let dc=eff?((eff-1)%7)+1:0;
+ if(gap!==0&&dc===7)dc=0;
+ return{eff,done:gap===0,dc,freeze:GX.streak_freeze||0}}
+function gxStreakCard(){
+ const s=gxStreak();if(!s)return '';
+ const dots=GX_R.map((c,i)=>`<div class="gxd ${i<s.dc?'on':''} ${(!s.done&&i===s.dc)?'now':''}"><i>${i<s.dc?'✓':c}</i><small>Day ${i+1}</small></div>`).join('');
+ const nxt=GX_R[s.done?(s.dc%7):s.dc];
+ return `<div class="g card gxc"><div class="row"><b>🔥 Daily streak</b><span class="sp"></span><span class="tag">${s.eff} day${s.eff===1?'':'s'}</span></div><div class="gxds">${dots}</div>`
+ +`<button class="btn w" ${s.done?'disabled':''} onclick="gxClaim()">${s.done?'Done for today. Tomorrow +'+nxt+' coins':'Claim day '+(s.dc+1)+' · +'+GX_R[s.dc]+' coins'}</button>`
+ +`<div class="m" style="margin-top:8px">${s.freeze?'🧊 Streak freeze ready: one missed day will not break your streak.':'Miss a day and your streak goes back to 0.'} Day 7 pays 50 coins.</div></div>`}
+async function gxClaim(){
+ const r=await sb.rpc('claim_streak');
+ if(r.error){toast(r.error.message);await gxLoad();render();return}
+ const d=r.data||{};
+ toast('🔥 Day '+d.streak+' streak! +'+d.reward+' coins'+(d.freeze_used?' (freeze used)':''));
+ await loadAll();render()}
+
+/* ---- next scrim countdown + 30 minute reminder ---- */
+function gxAt(label){
+ const m=/(\d{1,2})(?::(\d{2}))?\s*(am|pm)?/i.exec(label||'');if(!m)return null;
+ let h=+m[1];const mi=+(m[2]||0),ap=(m[3]||'').toLowerCase();
+ if(ap==='pm'&&h<12)h+=12;if(ap==='am'&&h===12)h=0;if(h>23||mi>59)return null;
+ const d=new Date();d.setHours(h,mi,0,0);if(d.getTime()<=Date.now())d.setDate(d.getDate()+1);
+ return +d}
+const gxMine=sid=>(S.mine||[]).some(b=>b.sid===sid&&!(Date.now()-Date.parse(b.date)>2*864e5));
+function gxNext(){
+ let any=null,mine=null;
+ (S.scrims||[]).forEach(s=>{const at=gxAt(s.t);if(!at)return;
+  const o={s,at,booked:gxMine(s.id)};
+  if(!any||at<any.at)any=o;if(o.booked&&(!mine||at<mine.at))mine=o});
+ return mine||any}
+function gxNextCard(){
+ const n=gxNext();if(!n)return '';
+ return `<div class="g card gxn"><div class="m">${n.booked?'✅ Your booked scrim starts in':'⏱️ Next scrim in'}</div><b class="gxt" id="hxcd">${gxFmt(n.at-Date.now())}</b>`
+ +`<div class="row" style="margin-top:6px"><div class="m sp">${esc(n.s.t)} · ${esc(n.s.map)} · ${Math.max(0,n.s.cap-n.s.got)} slots left</div><button class="btn ${n.booked?'o':''}" onclick="jump('sc')">${n.booked?'My slot':'Book now'}</button></div></div>`}
+setInterval(()=>{const el=$('#hxcd');if(!el)return;const n=gxNext();if(n)el.textContent=gxFmt(n.at-Date.now())},1000);
+setInterval(()=>{
+ if(!uid)return;
+ (S.scrims||[]).forEach(sc=>{
+  if(!gxMine(sc.id))return;const at=gxAt(sc.t);if(!at)return;
+  const ms=at-Date.now();if(ms<=0||ms>30*6e4)return;
+  const k='hxr_'+sc.id+'_'+new Date().toDateString();
+  try{if(localStorage.getItem(k))return;localStorage.setItem(k,1)}catch(e){}
+  alertMsg('⏰ Scrim in '+Math.ceil(ms/6e4)+' min',sc.t+' · '+sc.map+'. Get ready!')})},30000);
+
+/* ---- welcome bonus ---- */
+const gxWelcomeCard=()=>`<div class="g card gxw"><div class="row"><span style="font-size:30px">🎁</span><div class="sp"><b>Welcome to House of Champions!</b><div class="m">Your welcome bonus is waiting: 50 coins, on us.</div></div></div><button class="btn w" onclick="gxWelcome()">Claim +50 coins</button></div>`;
+async function gxWelcome(){
+ const r=await sb.rpc('claim_welcome');
+ if(r.error){toast(r.error.message);return}
+ toast('🎁 +50 coins added. Good luck in your first scrim!');await loadAll();render()}
+
+/* ---- referral ---- */
+function gxInviteCard(){
+ if(!GX)return '';
+ return `<div class="g card"><b>👥 Invite friends</b><p class="m" style="margin:4px 0 10px">Share your code. When a new friend joins and enters it, you both get 25 coins.</p>`
+ +`<div class="rcr"><div><small>YOUR CODE</small><b>${esc(S.me.id||'')}</b></div><button class="btn o" data-v="${esc(S.me.id||'')}" onclick="hxCopy(this.dataset.v)">Copy</button></div>`
+ +`<button class="btn w" onclick="gxShare()">Share invite link</button>`
+ +(GX.referred_by?'<div class="m" style="margin-top:8px">You already used a friend code 💛</div>':`<div class="row" style="margin-top:10px"><input class="cs" id="refc" placeholder="Friend’s code (FF-123456)" aria-label="Friend code" style="margin:0"><button class="btn" onclick="gxRef()">Apply</button></div>`)+'</div>'}
+function gxShare(){
+ const c=S.me.id,u=location.origin+location.pathname+'?ref='+encodeURIComponent(c),t='Join me on House of Champions Free Fire scrims! Use my code '+c+' and we both get 25 coins: '+u;
+ if(navigator.share)navigator.share({title:'House of Champions',text:t}).catch(()=>{});else hxCopy(t)}
+async function gxRef(){
+ const el=$('#refc'),c=el?el.value.trim():'';
+ if(c.length<4){toast('Enter your friend’s code');return}
+ const r=await sb.rpc('apply_referral',{code:c});
+ toast(r.error?r.error.message:'🤝 Done! +25 coins for you both');
+ if(!r.error){await loadAll();render()}}
+
+/* ---- level + badge ---- */
+function gxLevel(){
+ const m=S.me||{},pts=(m.m||0)*5+(m.w||0)*20+(m.k||0)*2;
+ let i=0;GX_L.forEach((l,k)=>{if(pts>=l[1])i=k});
+ const nx=GX_L[i+1];
+ return{i,n:GX_L[i][0],ic:GX_L[i][2],pts,nx,pct:nx?Math.min(100,(pts-GX_L[i][1])/(nx[1]-GX_L[i][1])*100):100}}
+function gxLevelCard(){
+ const l=gxLevel();
+ return `<h3>Your level</h3><div class="g card"><div class="row"><b style="font-size:20px">${l.ic} ${l.n}</b><span class="sp"></span><span class="m">${l.pts} pts</span></div><div class="bar" style="margin:10px 0 6px"><i style="width:${l.pct}%"></i></div><div class="m">${l.nx?(l.nx[1]-l.pts)+' pts to '+l.nx[2]+' '+l.nx[0]:'You reached the top level 👑'}</div><div class="m" style="margin-top:6px;font-size:11px">Points: 5 per match, 20 per win, 2 per kill. Rookie → Pro → Legend.</div></div>`}
+
+/* ---- payment trust ---- */
+function gxPayCard(){
+ const p=(S.hist||[]).find(h=>h.st==='pending'),rj=!p&&(S.hist||[])[0]&&S.hist[0].st==='rejected';
+ const st=['Submitted','Checking','Confirmed'].map((s,i)=>`<div class="${i<=1?'on':''} ${i===1?'gxpulse':''}"><i></i>${s}</div>`).join('');
+ return `<div class="g card gxp"><div class="row"><b>🛡️ Safe payments</b><span class="sp"></span><span class="tag">~10 min</span></div>`
+ +`<p class="m" style="margin:4px 0 8px">${p?'We received your payment for <b>'+esc(p.l0)+'</b> and are checking it now. Approval usually takes about 10 minutes.':rj?'Your last payment could not be verified. Please check the transaction ID and try again, or tell us and we will sort it out.':'Every payment is checked by hand. Approval usually takes about 10 minutes and you get a notification the moment your slot is confirmed.'}</p>`
+ +(p?`<div class="hxs">${st}</div>`:'')
+ +(rj?'<button class="btn o w" onclick="HXF.cat=\'payment\';go(\'feedback\')">Get help with this payment</button>':'')+'</div>'}
+
+/* ---- season ---- */
+function gxSeasonCard(){
+ const d=new Date(),end=new Date(d.getFullYear(),d.getMonth()+1,1),left=Math.ceil((end-d)/864e5);
+ return `<div class="g card row"><span style="font-size:24px">🗓️</span><div class="sp"><b style="font-size:14px">Season ${d.toLocaleString('en-GB',{month:'long',year:'numeric'})}</b><div class="m">Points reset in ${left} day${left>1?'s':''}. Climb the ranks before the season ends.</div></div></div>`}
+async function gxSeasonReset(){
+ if(!confirm('Save the current standings and reset ALL team points to 0?'))return;
+ const r=await sb.rpc('reset_season');
+ toast(r.error?r.error.message:'New season started. Standings saved.');
+ await loadAll();render()}
+
+/* ---- wiring ---- */
+const _gxHome=V.home;
+V.home=function(){
+ let h=_gxHome();const l=gxLevel();
+ h=h.replace(/(<div class="hi">[^<]*<\/div>)/,m=>m+`<span class="gxl">${l.ic} ${l.n}</span>`);
+ const ex=(GX&&GX.welcome_claimed===false?gxWelcomeCard():'')+gxNextCard()+(GX?gxStreakCard():'')+((S.hist||[]).some(x=>x.st==='pending')?gxPayCard():'');
+ return h.replace('<div class="pl">',()=>ex+'<div class="pl">')};
+const _gxRw=V.rewards;
+V.rewards=function(){return _gxRw().replace('</h2>',()=>'</h2>'+gxStreakCard())+gxInviteCard()};
+if(V.pay){const _gxPay=V.pay;V.pay=function(){return gxPayCard()+_gxPay()}}
+const _gxLb=V.lb;
+V.lb=function(){return gxSeasonCard()+_gxLb()};
+const _gxProf2=V.profile;
+V.profile=function(){const h=_gxProf2(),mk='<h3>Need help?</h3>';return h.includes(mk)?h.replace(mk,()=>gxLevelCard()+mk):h+gxLevelCard()};
+const _gxAdm=adm2;
+adm2=function(){
+ const h=_gxAdm(),b='<h3>Season</h3><div class="g card row"><div class="sp"><b style="font-size:14px">Monthly season</b><div class="m">Saves current standings, then resets team points to 0.</div></div><button class="btn o" onclick="gxSeasonReset()">Start new season</button></div>',mk='<h3>Feedback inbox (';
+ return h.includes(mk)?h.replace(mk,()=>b+mk):h+b};
+const _gxLA=loadAll;
+loadAll=async function(){
+ await gxSeen().catch(()=>0);
+ const ok=await _gxLA.apply(this,arguments);
+ if(ok){await gxLoad().catch(()=>0);gxRefAuto().catch(()=>0)}
+ return ok};
+
+/* ===== HOF animations (JS part) ===== */
+const HXA={v:null,coins:null,ck:null,bn:0};
+const hxMotion=()=>!(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches);
+function hxEnter(){
+ const mn=$('#app main');
+ if(mn){mn.classList.add('hx-in');setTimeout(()=>{try{mn.classList.remove('hx-in')}catch(e){}},1500);hxCount(mn)}
+ const nb=$('.nav button.on span');
+ if(nb){nb.parentNode.classList.add('hx-pop');setTimeout(()=>{try{nb.parentNode.classList.remove('hx-pop')}catch(e){}},700)}}
+function hxCount(root){
+ root.querySelectorAll('.bn,.mv,.st b,b[style*="26px"],b[style*="24px"]').forEach(el=>{
+  const tn=[...el.childNodes].find(n=>n.nodeType===3&&/^\s*\d{1,7}\s*$/.test(n.nodeValue));
+  if(!tn)return;const n=+tn.nodeValue.trim();if(n<2)return;
+  const d=Math.min(1100,450+n*4),s=performance.now();tn.nodeValue='0';
+  const step=now=>{const p=Math.min(1,(now-s)/d),e=1-Math.pow(1-p,3);tn.nodeValue=String(p<1?Math.round(n*e):n);if(p<1)requestAnimationFrame(step)};
+  requestAnimationFrame(step)})}
+function hxCoinPop(n){
+ const e=document.createElement('div');e.className='hxcoin';e.textContent='+'+n+' 🪙';
+ document.body.appendChild(e);setTimeout(()=>e.remove(),1400);
+ document.querySelectorAll('b[style*="26px"]').forEach(b=>{b.classList.add('hxcoinp');setTimeout(()=>b.classList.remove('hxcoinp'),700)})}
+function hxBubbles(){
+ if(view!=='chat'||!chat){HXA.ck=null;HXA.bn=0;return}
+ const bs=document.querySelectorAll('.cm .bb:not(.hxty)'),k=chat.id;
+ if(HXA.ck===k&&bs.length>HXA.bn)for(let i=HXA.bn;i<bs.length;i++)bs[i].classList.add('nw');
+ HXA.ck=k;HXA.bn=bs.length}
+function hxNavInd(){
+ const nav=$('.nav');if(!nav)return;
+ const on=nav.querySelector('button.on');
+ let ind=nav.querySelector('.hxni');
+ if(!ind){ind=document.createElement('i');ind.className='hxni';nav.insertBefore(ind,nav.firstChild)}
+ if(!on){ind.style.opacity='0';return}
+ const nr=nav.getBoundingClientRect(),br=on.getBoundingClientRect(),x=br.left-nr.left+br.width/2-33;
+ if(HXA.navX!=null&&hxMotion()){ind.style.transition='none';ind.style.transform='translateX('+HXA.navX+'px)';void ind.offsetWidth}
+ ind.style.transition='';ind.style.transform='translateX('+x+'px)';HXA.navX=x}
+const _hxR2=render;
+render=function(){
+ const cv=view+(mode==='admin'?'#a':'');
+ _hxR2();
+ try{hxNavInd()}catch(e){}
+ try{
+  if(hxMotion()){
+   if(cv!==HXA.v){HXA.v=cv;hxEnter()}
+   if(typeof S!=='undefined'&&S&&typeof S.coins==='number'){
+    if(HXA.coins!==null&&S.coins>HXA.coins)hxCoinPop(S.coins-HXA.coins);
+    HXA.coins=S.coins}
+   hxBubbles()}
+ }catch(e){}};
 
 theme();boot();
 
