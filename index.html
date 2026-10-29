@@ -428,7 +428,7 @@ function admin(){const rev=S.hist.reduce((a,h)=>a+h.amt,0),bk=S.scrims.reduce((a
 return `<div class="hd mini"><div class="logo">Admin <b>panel</b></div></div>
 ${role==='super'?`<div class="grid"><div class="g st"><b>${rs(rev)}</b><span class="m">Revenue</span></div><div class="g st"><b>${bk}</b><span class="m">Slots booked</span></div></div>`:''}
 ${Object.entries(AD).map(([k,[title,f,fmt]])=>`<h3>${title}</h3><div class="g card">${k==='news'||k==='banners'?'<p class="m" style="margin-bottom:8px">Upload your designed image (16:9 works best). Text fields are optional.</p>':''}${f.map((x,i)=>`<input id="f-${k}-${i}" placeholder="${x.split(':')[1]}" aria-label="${x.split(':')[1]}">`).join('')}${xf(k)}<button class="btn w" onclick="${k==='news'||k==='banners'?`addN2('${k}')`:`addI('${k}')`}">Upload</button></div>${S[k].map(x=>`<div class="g card row"><span class="sp" style="font-size:13px">${esc(fmt(x))}</span><button class="x" aria-label="Delete" onclick="delI('${k}',${x.id})">✕</button></div>`).join('')}`).join('')}
-<h3>Tournament result</h3><div class="g card"><p class="m" style="margin-bottom:8px">Points = placement points + kills. The leaderboard re-ranks instantly.</p><input id="rt" placeholder="Team name"><input id="rp" inputmode="numeric" placeholder="Placement (1 to 12)"><input id="rk" inputmode="numeric" placeholder="Total kills"><button class="btn w" onclick="addR()">Update leaderboard</button></div>${adm2()}`}
+<h3>Tournament result</h3><div class="g card"><p class="m" style="margin-bottom:8px">Points = placement points + kills. The leaderboard re-ranks instantly.</p><input id="rt" list="hxteams" autocomplete="off" placeholder="Team name"><input id="rp" inputmode="numeric" placeholder="Placement (1 to 12)"><input id="rk" inputmode="numeric" placeholder="Total kills"><label class="m" style="display:block;margin:2px 2px 6px">Team photo (optional). It shows on the leaderboard.</label><input type="file" id="rimg" accept="image/*" aria-label="Team photo"><datalist id="hxteams">${(S.lb||[]).map(x=>`<option value="${esc(x.n)}">`).join('')}</datalist><button class="btn w" onclick="addR()">Update leaderboard</button></div>${adm2()}`}
 function addI(k){const o={id:Date.now()};let ok=1;AD[k][1].forEach((x,i)=>{const [key]=x.split(':'),v=$(`#f-${k}-${i}`).value.trim();if(!v)ok=0;o[key]=['fee','cap','p'].includes(key)?Number(v)||0:v});if(!ok){toast('Fill every field');return}if(k==='scrims')o.got=0;if(k==='tasks')o.d=0;S[k].unshift(o);save();toast('Uploaded');render()}
 function addN(){const f=$('#f-news-img').files[0];if(!f){toast('Choose a thumbnail image');return}const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const w=Math.min(800,im.width),c=document.createElement('canvas');c.width=w;c.height=Math.round(im.height*w/im.width);c.getContext('2d').drawImage(im,0,0,c.width,c.height);S.news.unshift({id:Date.now(),t:$('#f-news-0').value.trim(),s:$('#f-news-1').value.trim(),img:c.toDataURL('image/jpeg',.8)});save();toast('News uploaded');render()};im.onerror=()=>toast('Could not read this image');im.src=r.result};r.readAsDataURL(f)}
 function delI(k,id){S[k]=S[k].filter(x=>x.id!==id);save();render()}
@@ -528,7 +528,7 @@ render=function(){const sw=$('.sw'),a=$('#app');
  if(!ready){sw.style.visibility='hidden';a.innerHTML='<p class="m" style="text-align:center;padding-top:120px">Loading\u2026</p>';return}
  if(!uid){sw.style.visibility='hidden';a.innerHTML=V.auth();return}
  sw.style.visibility=role?'visible':'hidden';if(!role)mode='user';
- if(S.me&&S.me.vis!==vSync){vSync=S.me.vis;sb.from('profiles').update({visible:vSync}).eq('id',uid)}
+ if(S.me&&S.me.vis!==vSync){vSync=S.me.vis;hxSaveProfile(false,vSync)}
  if(mode==='admin'){const h=S.hist;S.hist=(S.allpay||[]).filter(p=>p.status==='approved').map(p=>({amt:p.amount}));_r();S.hist=h}else _r()};
 
 /* ===== HOF v2 features ===== */
@@ -645,7 +645,7 @@ function playAd(){const o=document.createElement('div');o.className='sview';o.st
 const _lb=V.lb;
 V.lb=()=>{const t=[...S.lb].sort((x,y)=>y.p-x.p)[0];return (t?`<div class="hero1" style="${t.img?`background:linear-gradient(transparent 35%,rgba(0,0,0,.75)),url(${esc(t.img)}) center/cover`:'background:linear-gradient(135deg,#4cb8ff,#0b1220)'}"><span class="tag" style="background:#fff;color:#0b1220;align-self:flex-start">\ud83d\udc51 1st place</span><b style="font-size:20px">${esc(t.n)}</b><span>${t.p} pts</span></div>`:'')+_lb()};
 V.profile=function(){const m=S.me,l=m.m-m.w;return `<div class="g card" style="text-align:center"><div style="position:relative;width:96px;margin:0 auto 10px">${avt({n:m.name,av:m.av},96)}<label class="cam" aria-label="Change photo">\ud83d\udcf7<input type="file" accept="image/*" style="display:none" onchange="setDP(this)"></label></div><input value="${esc(m.name)}" aria-label="Name" maxlength="30" style="text-align:center;font-weight:700"><div class="m" style="margin-bottom:8px">User ID: ${esc(m.id)}</div><input value="${esc(m.bio||'')}" aria-label="Bio" maxlength="120" placeholder="Write your bio" style="text-align:center;margin:0"></div><h3>Free Fire details</h3><div class="g card"><input value="${esc(m.ffu||'')}" aria-label="FF UID" inputmode="numeric" placeholder="Free Fire UID"><input value="${esc(m.ffn||'')}" aria-label="FF name" placeholder="In-game name" style="margin:0"><p class="m" style="margin-top:8px">Used for scrim lists. Only admins can see it.</p></div><h3>Your progress</h3><div class="grid"><div class="g st"><b>${m.m}</b><span class="m">Matches played</span></div><div class="g st"><b>${m.w}</b><span class="m">Matches won</span></div><div class="g st"><b>${l}</b><span class="m">Matches lost</span></div><div class="g st"><b>${m.k}</b><span class="m">Scrim kills</span></div></div><div class="g card row" style="margin-top:10px"><div class="sp"><b style="font-size:14px">Private profile</b><div class="m">${m.vis?'Public: others can see your bio and stats':'Private: bio and stats are hidden'}</div></div><button class="tg ${m.vis?'':'on'}" role="switch" aria-checked="${!m.vis}" aria-label="Private profile" onclick="S.me.vis=!S.me.vis;render()"></button></div>`};
-document.addEventListener('input',e=>{const l=e.target.getAttribute&&e.target.getAttribute('aria-label'),k={Name:'name',Bio:'bio','FF UID':'ffu','FF name':'ffn'}[l];if(!uid||!k)return;S.me[k]=e.target.value;clearTimeout(pt);pt=setTimeout(()=>sb.from('profiles').update({name:S.me.name,bio:S.me.bio,ff_uid:S.me.ffu||null,ff_name:S.me.ffn||null}).eq('id',uid),700)});
+document.addEventListener('input',e=>{const l=e.target.getAttribute&&e.target.getAttribute('aria-label'),k={Name:'name',Bio:'bio','FF UID':'ffu','FF name':'ffn'}[l];if(!uid||!k)return;S.me[k]=e.target.value;clearTimeout(pt);pt=setTimeout(()=>{pt=0;hxSaveProfile(false)},900)});
 async function setDP(inp){const f=inp.files[0];if(!f)return;try{const b=await shrink(f,400),p='avatars/'+uid+'_'+Date.now()+'.jpg',u=await sb.storage.from('media').upload(p,b,{contentType:'image/jpeg'});if(u.error)throw u.error;const url=sb.storage.from('media').getPublicUrl(p).data.publicUrl,r=await sb.from('profiles').update({avatar_url:url}).eq('id',uid);if(r.error)throw r.error;S.me.av=url;toast('Photo updated');render()}catch(e){toast(e.message||'Upload failed')}}
 
 /* news register, gear shop, room details */
@@ -678,7 +678,7 @@ function adm2(){const all=S.allpay||[],pend=all.filter(p=>p.status==='pending'),
  return `<h3>Pending payments (${pend.length})</h3>`+(pend.map(p=>`<div class="g card"><div class="row"><b class="sp" style="font-size:13px">${who(p)}</b><b>${rs(p.amount)}</b></div><div class="m" style="margin:4px 0 8px">${esc(p.method)} \u00b7 from ${esc(p.sender_number)} \u00b7 TID ${esc(p.txn_id)} \u00b7 ${p.kind==='plan'?'Membership':'Scrim slot'}</div><div class="row">${p.screenshot_path?`<button class="btn o" onclick="viewSS('${esc(p.screenshot_path)}')">Screenshot</button>`:''}<span class="sp"></span><button class="btn o" onclick="rej(${p.id})">Reject</button><button class="btn" onclick="apr(${p.id})">Approve</button></div></div>`).join('')||'<p class="m">No pending payments.</p>')
  +'<h3>Booking sheets &amp; room ID (IDP)</h3>'+(S.scrims.map(s=>{const rows=sheetRows(s.id),rm=S.rooms[s.id]||{};return `<div class="g card"><div class="row"><b class="sp">${esc(s.t)} \u00b7 ${esc(s.map)}</b><span class="tag">${rows.length}/${s.cap}</span></div><div class="tbl"><table><tr>${HDR.map(h=>`<th>${h}</th>`).join('')}</tr>${rows.map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join('')}</tr>`).join('')||'<tr><td colspan="6">No bookings yet</td></tr>'}</table></div><div class="row" style="margin:8px 0"><button class="btn o sp" onclick="copySheet(${s.id})">Copy</button><button class="btn o sp" onclick="csvSheet(${s.id})">CSV</button></div><input id="rm${s.id}" placeholder="Room ID" aria-label="Room ID" value="${esc(rm.room_id||'')}"><input id="rp${s.id}" placeholder="Room password" aria-label="Room password" value="${esc(rm.room_pass||'')}"><button class="btn w" onclick="sendIDP(${s.id})">${rm.released?'Update &amp; resend':'Send'} IDP to ${rows.length} players</button></div>`}).join('')||'<p class="m">No scrims.</p>')
  +`<h3>Tournament registrations (${(S.allreg||[]).length})</h3><div class="g card"><div class="tbl"><table><tr>${REGH.map(h=>`<th>${h}</th>`).join('')}</tr>${regRows().map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join('')}</tr>`).join('')||'<tr><td colspan="5">No registrations yet</td></tr>'}</table></div><div class="row" style="margin-top:8px"><button class="btn o sp" onclick="copyRegs()">Copy</button><button class="btn o sp" onclick="csvRegs()">CSV</button></div></div>`
- +`<h3>Team photo (leaderboard)</h3><div class="g card"><input id="tn" placeholder="Team name (as on leaderboard)" aria-label="Team name"><input type="file" id="tf" accept="image/*"><button class="btn w" onclick="setTeamImg()">Save team photo</button></div>`
+ +`<h3>Team photo (leaderboard)</h3><div class="g card"><input id="tn" list="hxteams" autocomplete="off" placeholder="Team name (as on leaderboard)" aria-label="Team name"><input type="file" id="tf" accept="image/*"><button class="btn w" onclick="setTeamImg()">Save team photo</button></div>`
  +`<h3>Update player stats</h3><div class="g card"><input id="ps3" placeholder="Player ID (FF-123456)" aria-label="Player ID"><input id="ps0" inputmode="numeric" placeholder="Matches played (+)"><input id="ps1" inputmode="numeric" placeholder="Matches won (+)"><input id="ps2" inputmode="numeric" placeholder="Scrim kills (+)"><button class="btn w" onclick="addPS()">Add stats</button></div>`
  +(role==='super'?`<h3>All payments</h3>`+all.filter(p=>p.status!=='pending').slice(0,30).map(p=>`<div class="g card row"><div class="sp"><b style="font-size:13px">${who(p)}</b><div class="m">${esc(p.method)} \u00b7 TID ${esc(p.txn_id)}</div></div><div style="text-align:right"><b>${rs(p.amount)}</b><br><span class="tag ${p.status==='rejected'?'f':''}">${esc(p.status)}</span></div></div>`).join(''):'')
  +`<button class="btn k w" style="margin:14px 0 6px" onclick="mode='user';render()">Back to user app</button>`}
@@ -1181,6 +1181,107 @@ render=function(){
     HXA.coins=S.coins}
    hxBubbles()}
  }catch(e){}};
+
+/* ===== HOF fixes: phone back button, profile save, photo save, leaderboard team photo ===== */
+
+/* ---- 1. Back button: go to the previous screen. From Home it asks once, then the app closes ---- */
+const HXH={stack:[],skip:false,restoring:false};
+const hxSig=()=>(mode==='admin'?'a:':'u:')+view+':'+(chat?keyOf(chat):'');
+const hxTop=()=>HXH.stack[HXH.stack.length-1];
+const hxFindChat=k=>k?(RM2.find(x=>x.id===k)||S.groups.find(x=>'g'+x.id===k)||S.people.find(x=>x.id===k)||null):null;
+function hxRestore(t){
+ HXH.restoring=true;
+ try{mode=t.mode;view=t.view;chat=hxFindChat(t.ck);render();scrollTo(0,0)}finally{HXH.restoring=false}}
+try{history.replaceState({s:'exit'},'')}catch(e){}
+function hxHistSync(){
+ if(!uid||view==='login'||HXH.restoring)return;
+ const s=hxSig(),st=HXH.stack,t=hxTop();
+ if(t&&s===t.s)return;
+ const cur={s,view,mode,ck:chat?keyOf(chat):''};
+ if(st.length>=2&&st[st.length-2].s===s){st.pop();HXH.skip=true;try{history.back()}catch(e){HXH.skip=false}return}
+ st.push(cur);
+ try{history.pushState(cur,'')}catch(e){}}
+window.addEventListener('popstate',e=>{
+ if(HXH.skip){HXH.skip=false;return}
+ const sheets=document.querySelectorAll('.sheet');
+ if(sheets.length){sheets[sheets.length-1].remove();if(hxTop())try{history.pushState(hxTop(),'')}catch(x){}return}
+ const st=e.state;
+ if(!st||st.s===undefined||st.s==='exit'){
+  if(HXH.stack.length>1){HXH.stack.pop();hxRestore(hxTop());return}
+  toast('Press back again to exit');return}
+ HXH.stack.pop();
+ const t=hxTop();
+ if(!t||t.s!==st.s)HXH.stack=[st];
+ hxRestore(st)});
+const _hxR3=render;
+render=function(){_hxR3();try{hxHistSync()}catch(e){}};
+const _hxLogin2=V.login;
+V.login=()=>{HXH.stack=[];return _hxLogin2()};
+
+/* ---- 2. Profile: save with a real result (no more silent failures) ---- */
+async function hxSaveProfile(show,vis){
+ if(!uid)return false;
+ const m=S.me||{};
+ const r=await sb.rpc('save_profile',{p_name:m.name||null,p_bio:m.bio==null?'':m.bio,p_ffu:m.ffu==null?'':String(m.ffu),p_ffn:m.ffn==null?'':m.ffn,p_vis:typeof vis==='boolean'?vis:null});
+ let err=null;
+ if(r.error){
+  if(/Could not find the function|schema cache/i.test(r.error.message)){
+   const u=await sb.from('profiles').update({name:m.name,bio:m.bio,ff_uid:m.ffu||null,ff_name:m.ffn||null}).eq('id',uid).select('id');
+   if(u.error)err=u.error.message;else if(!u.data||!u.data.length)err='Not saved. Please run the SQL update (hof-fixes) in Supabase.'}
+  else err=r.error.message}
+ if(err){toast('❌ '+err);return false}
+ try{save()}catch(e){}
+ if(show)toast('Profile saved ✅');
+ return true}
+function hxFlushProfile(){if(pt){clearTimeout(pt);pt=0;hxSaveProfile(false)}}
+const _hxGo=go;
+go=function(v){hxFlushProfile();return _hxGo.apply(this,arguments)};
+document.addEventListener('visibilitychange',()=>{if(document.hidden)hxFlushProfile()});
+setDP=async function(inp){
+ const f=inp.files[0];if(!f)return;
+ try{
+  const b=await shrink(f,400),p='avatars/'+uid+'_'+Date.now()+'.jpg',u=await sb.storage.from('media').upload(p,b,{contentType:'image/jpeg'});
+  if(u.error)throw new Error('Photo upload blocked: '+u.error.message);
+  const url=sb.storage.from('media').getPublicUrl(p).data.publicUrl,r=await sb.rpc('set_avatar',{p_url:url});
+  if(r.error){
+   if(!/Could not find the function|schema cache/i.test(r.error.message))throw r.error;
+   const x=await sb.from('profiles').update({avatar_url:url}).eq('id',uid).select('id');
+   if(x.error)throw x.error;
+   if(!x.data||!x.data.length)throw new Error('Photo not saved. Please run the SQL update (hof-fixes) in Supabase.')}
+  S.me.av=url;try{save()}catch(e){}
+  toast('Photo saved ✅');render()
+ }catch(e){toast('❌ '+(e.message||'Upload failed'))}};
+const _hxP4=V.profile;
+V.profile=function(){
+ const h=_hxP4(),mk='<h3>Your progress</h3>';
+ return h.includes(mk)?h.replace(mk,()=>'<button class="btn w" style="margin-top:10px" onclick="hxSaveProfile(true)">Save profile</button>'+mk):h};
+
+/* ---- 3. Leaderboard team photo ---- */
+async function hxTeamImg(team,f){
+ try{
+  const b=await shrink(f,900),path='teams/'+Date.now()+'.jpg',u=await sb.storage.from('media').upload(path,b,{contentType:'image/jpeg'});
+  if(u.error)return 'Upload blocked: '+u.error.message;
+  const url=sb.storage.from('media').getPublicUrl(path).data.publicUrl,r=await sb.rpc('set_team_image',{p_team:team,p_url:url});
+  if(!r.error)return '';
+  if(!/Could not find the function|schema cache/i.test(r.error.message))return r.error.message;
+  const x=await sb.from('lb').update({image_url:url}).eq('team',team).select('team');
+  if(x.error)return x.error.message;
+  return (x.data&&x.data.length)?'':'Not saved. Please run the SQL update (hof-fixes) in Supabase.'
+ }catch(e){return e.message||'failed'}}
+addR=async function(){
+ const n=$('#rt').value.trim(),p=parseInt($('#rp').value),k=parseInt($('#rk').value)||0,fi=$('#rimg'),f=fi&&fi.files&&fi.files[0];
+ if(!n||!p){toast('Enter team and placement');return}
+ const r=await sb.rpc('add_result',{team_name:n,place:p,kills:k});
+ if(r.error){toast(r.error.message);return}
+ let msg='Leaderboard updated ✅';
+ if(f){const e=await hxTeamImg(n,f);msg=e?'Points saved, but photo failed: '+e:'Leaderboard and team photo saved ✅'}
+ toast(msg);await loadAll();render()};
+setTeamImg=async function(){
+ const n=$('#tn').value.trim(),f=$('#tf').files[0];
+ if(!n||!f){toast('Enter team name and choose a photo');return}
+ const e=await hxTeamImg(n,f);
+ toast(e?'❌ '+e:'Team photo saved ✅');
+ if(!e){await loadAll();render()}};
 
 theme();boot();
 
