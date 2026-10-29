@@ -5,7 +5,7 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
 
-<link rel="stylesheet" href="hof-premium.css?v=1">
+
 
 <style>
 :root{--bg1:#dff1ff;--bg2:#ffffff;--tx:#0b1220;--mu:#5b6b80;--ac:#4cb8ff;--ac2:#1e90e6;--gl:rgba(255,255,255,.55);--gb:rgba(255,255,255,.85);--sh:0 10px 30px rgba(30,144,230,.16);--in:rgba(255,255,255,.7);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -319,10 +319,10 @@ body::after{width:340px;height:340px;right:-120px;bottom:5%;background:radial-gr
 
 /* ===== Splash (video style), sliding nav circle, growth cards ===== */
 #hxsp{position:fixed;inset:0;z-index:999;background:#000;display:flex;align-items:center;justify-content:center;animation:hxsp 2.4s ease forwards}
-#hxsp img{width:124px;height:124px;border-radius:30px;opacity:0;animation:hxlogo 1.3s cubic-bezier(.2,.8,.2,1) .15s forwards,hxglw 1.4s ease-in-out .15s infinite alternate}
+#hxsp img{width:150px;height:auto;max-height:150px;object-fit:contain;opacity:0;animation:hxlogo 1.3s cubic-bezier(.2,.8,.2,1) .15s forwards,hxglw 1.4s ease-in-out .15s infinite alternate}
 @keyframes hxsp{0%,76%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden}}
-@keyframes hxlogo{from{opacity:0;transform:scale(.82);filter:brightness(.25)}to{opacity:1;transform:none;filter:none}}
-@keyframes hxglw{from{box-shadow:0 0 24px rgba(76,184,255,.18)}to{box-shadow:0 0 80px rgba(76,184,255,.55)}}
+@keyframes hxlogo{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:none}}
+@keyframes hxglw{from{filter:drop-shadow(0 0 6px rgba(76,184,255,.15))}to{filter:drop-shadow(0 0 26px rgba(76,184,255,.7))}}
 @media (prefers-reduced-motion:reduce){#hxsp{display:none}}
 
 .nav{overflow:visible}
@@ -333,8 +333,6 @@ body::after{width:340px;height:340px;right:-120px;bottom:5%;background:radial-gr
 .nav button span{transition:transform .3s}
 
 .gxl{display:inline-block;margin-top:4px;padding:2px 10px;border-radius:99px;font-size:11px;font-weight:700;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25)}
-.gxn{text-align:left}
-.gxt{display:block;font-size:34px;font-weight:700;letter-spacing:1px;font-variant-numeric:tabular-nums;margin:2px 0}
 .gxw,.gxp{background:linear-gradient(135deg,rgba(76,184,255,.2),rgba(30,144,230,.1))}
 .gxds{display:flex;gap:6px;margin:12px 0}
 .gxd{flex:1;text-align:center}
@@ -343,10 +341,23 @@ body::after{width:340px;height:340px;right:-120px;bottom:5%;background:radial-gr
 .gxd.on i{background:linear-gradient(135deg,#4cb8ff,#1e90e6);color:#fff;border-color:transparent}
 .gxd.now i{border-color:var(--ac);color:var(--tx);animation:hxglow 1.8s ease-in-out infinite}
 .gxpulse i{animation:hxglow 1.4s ease-in-out infinite}
+
+/* ===== Lobbies ===== */
+.lbh{display:flex;align-items:center;justify-content:space-between;margin:16px 2px 8px}
+.lbh b{font-size:17px}
+.lbrow .oc{width:80%}
+.lbc .oh{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.lbm{font-size:13px;font-weight:600;opacity:.75}
+.lbf{display:flex;align-items:center;gap:10px}
+.lbf .btn{flex:1}
+.lbt{font-size:11px;font-weight:600;color:var(--mu);white-space:nowrap;align-self:flex-end;padding-bottom:2px}
+.lbg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.lbg label{font-size:11px;color:var(--mu);display:block}
+.lbg input,.lbg select{width:100%;margin:3px 0 0}
 </style>
 </head>
 <body>
-<div id="hxsp" aria-hidden="true"><img src="icon-192.png" alt=""></div><script>try{if(sessionStorage.getItem("hxs"))document.getElementById("hxsp").remove();else sessionStorage.setItem("hxs","1")}catch(e){}</script>
+<div id="hxsp" aria-hidden="true"><img src="hof-logo.png" alt=""></div><script>try{if(sessionStorage.getItem("hxs"))document.getElementById("hxsp").remove();else sessionStorage.setItem("hxs","1")}catch(e){}</script>
 <div class="wrap">
  <div class="sw g" role="tablist"><button data-m="user" onclick="setMode('user')">User app</button><button data-m="admin" onclick="setMode('admin')">Admin panel</button></div>
  <div id="app"></div>
@@ -973,7 +984,7 @@ async function gxClaim(){
  toast('🔥 Day '+d.streak+' streak! +'+d.reward+' coins'+(d.freeze_used?' (freeze used)':''));
  await loadAll();render()}
 
-/* ---- next scrim countdown + 30 minute reminder ---- */
+/* ---- 30 minute reminder (uses the lobby timing set by admin) ---- */
 function gxAt(label){
  const m=/(\d{1,2})(?::(\d{2}))?\s*(am|pm)?/i.exec(label||'');if(!m)return null;
  let h=+m[1];const mi=+(m[2]||0),ap=(m[3]||'').toLowerCase();
@@ -981,17 +992,6 @@ function gxAt(label){
  const d=new Date();d.setHours(h,mi,0,0);if(d.getTime()<=Date.now())d.setDate(d.getDate()+1);
  return +d}
 const gxMine=sid=>(S.mine||[]).some(b=>b.sid===sid&&!(Date.now()-Date.parse(b.date)>2*864e5));
-function gxNext(){
- let any=null,mine=null;
- (S.scrims||[]).forEach(s=>{const at=gxAt(s.t);if(!at)return;
-  const o={s,at,booked:gxMine(s.id)};
-  if(!any||at<any.at)any=o;if(o.booked&&(!mine||at<mine.at))mine=o});
- return mine||any}
-function gxNextCard(){
- const n=gxNext();if(!n)return '';
- return `<div class="g card gxn"><div class="m">${n.booked?'✅ Your booked scrim starts in':'⏱️ Next scrim in'}</div><b class="gxt" id="hxcd">${gxFmt(n.at-Date.now())}</b>`
- +`<div class="row" style="margin-top:6px"><div class="m sp">${esc(n.s.t)} · ${esc(n.s.map)} · ${Math.max(0,n.s.cap-n.s.got)} slots left</div><button class="btn ${n.booked?'o':''}" onclick="jump('sc')">${n.booked?'My slot':'Book now'}</button></div></div>`}
-setInterval(()=>{const el=$('#hxcd');if(!el)return;const n=gxNext();if(n)el.textContent=gxFmt(n.at-Date.now())},1000);
 setInterval(()=>{
  if(!uid)return;
  (S.scrims||[]).forEach(sc=>{
@@ -1059,7 +1059,7 @@ const _gxHome=V.home;
 V.home=function(){
  let h=_gxHome();const l=gxLevel();
  h=h.replace(/(<div class="hi">[^<]*<\/div>)/,m=>m+`<span class="gxl">${l.ic} ${l.n}</span>`);
- const ex=(GX&&GX.welcome_claimed===false?gxWelcomeCard():'')+gxNextCard()+(GX?gxStreakCard():'')+((S.hist||[]).some(x=>x.st==='pending')?gxPayCard():'');
+ const ex=(GX&&GX.welcome_claimed===false?gxWelcomeCard():'')+(GX?gxStreakCard():'')+((S.hist||[]).some(x=>x.st==='pending')?gxPayCard():'');
  return h.replace('<div class="pl">',()=>ex+'<div class="pl">')};
 const _gxRw=V.rewards;
 V.rewards=function(){return _gxRw().replace('</h2>',()=>'</h2>'+gxStreakCard())+gxInviteCard()};
@@ -1078,6 +1078,62 @@ loadAll=async function(){
  const ok=await _gxLA.apply(this,arguments);
  if(ok){await gxLoad().catch(()=>0);gxRefAuto().catch(()=>0)}
  return ok};
+
+/* ===== Lobbies: T1 / T2 / T3 sections on Home + admin lobby manager ===== */
+let LBA=null;
+const LB_TIERS=['T1','T2','T3'];
+async function lbLoad(){
+ if(!uid)return;
+ const r=await sb.from('scrims').select('id,lobby').eq('active',true),m={};
+ if(!r.error)(r.data||[]).forEach(x=>{m[x.id]=x.lobby||'T1'});
+ (S.scrims||[]).forEach(s=>{s.lobby=m[s.id]||'T1'});
+ if(role){const a=await sb.from('scrims').select('*').order('id');LBA=a.error?null:a.data}}
+function lbCard(s){
+ const left=Math.max(0,s.cap-s.got),full=left<=0,pct=Math.min(100,s.got/Math.max(1,s.cap)*100),mine=(S.mine||[]).some(b=>b.sid===s.id);
+ return `<div class="oc lbc"><div class="oh"><span>${esc(s.lobby)} Lobby</span><span class="lbm">${esc(s.map)}</span></div>`
+ +`<div class="ob"><div class="sp"><div class="orow"><span>SLOTS LEFT</span><b>${left} / ${s.cap}</b></div><div class="orow"><span>TAKEN</span><b>${s.got}</b></div></div><div class="pr"><b>${rs(s.fee)}</b><span>per slot</span></div></div>`
+ +`<div class="oa"><div class="bar"><i style="width:${pct}%"></i></div><div class="lbf"><button class="btn k" ${full||mine?'disabled':''} onclick="buy('scrim',${s.id})">${mine?'BOOKED ✓':full?'SLOTS FULL':'BOOK SLOT'}</button><span class="lbt">🕘 ${esc(s.t)}</span></div></div></div>`}
+function lbTier(t){
+ const L=(S.scrims||[]).filter(s=>(s.lobby||'T1')===t),open=L.reduce((a,s)=>a+Math.max(0,s.cap-s.got),0);
+ return `<div class="lbh"><b>${t} Lobby</b><span class="m">${L.length?open+' slots open':'No lobby right now'}</span></div>`
+ +(L.length?`<div class="sn lbrow">${L.map(lbCard).join('')}</div>`:'<div class="g card m">New lobbies are added soon. Please check back later.</div>')}
+const _lbHome=V.home;
+V.home=function(){
+ let h=_lbHome();
+ h=h.replace(/<h3 id="sc">Book a scrim<\/h3>[\s\S]*?(?=<h3 id="gs">)/,()=>'<h3 id="sc">Book lobby</h3>'+LB_TIERS.map(lbTier).join(''));
+ return h.replace(/BOOK SCRIM/g,'BOOK LOBBY').replace(/Book Scrim/g,'Book Lobby').replace(/Tonight’s scrims/g,'Book lobby')};
+
+/* ---- admin: manage lobbies (tier, timing, map, price, slots, show/hide) ---- */
+function lbRow(r){
+ const id=r?r.id:0,v=(k,d)=>esc(r&&r[k]!=null?r[k]:d);
+ return `<div class="g card"><div class="row"><b class="sp">${r?'Lobby #'+id:'➕ Add new lobby'}</b>${r?`<span class="tag">${r.active===false?'Hidden':'Live'}</span>`:''}</div>`
+ +`<div class="lbg"><label>Lobby<select class="sel" id="lb_t_${id}">${LB_TIERS.map(t=>`<option ${((r&&r.lobby)||'T1')===t?'selected':''}>${t}</option>`).join('')}</select></label>`
+ +`<label>Timing (shown small)<input class="cs" id="lb_tm_${id}" value="${v('time_label','')}" placeholder="9:00 PM"></label>`
+ +`<label>Map<input class="cs" id="lb_m_${id}" value="${v('map','')}" placeholder="Erangel"></label>`
+ +`<label>Price (Rs)<input class="cs" id="lb_f_${id}" type="number" min="0" value="${v('fee','')}"></label>`
+ +`<label>Total slots<input class="cs" id="lb_c_${id}" type="number" min="1" value="${v('cap','12')}"></label></div>`
+ +`<div class="row">${r?`<button class="btn o sp" onclick="lbToggle(${id})">${r.active===false?'Show':'Hide'}</button>`:''}<button class="btn sp" onclick="lbSave(${id})">${r?'Save changes':'Add lobby'}</button></div></div>`}
+function lbAdmin(){
+ const rows=LBA||(S.scrims||[]).map(s=>({id:s.id,lobby:s.lobby,time_label:s.t,map:s.map,fee:s.fee,cap:s.cap,active:true}));
+ return '<h3>🎮 Lobbies (T1 / T2 / T3)</h3>'+lbRow(null)+rows.map(lbRow).join('')}
+async function lbSave(id){
+ const g=k=>($('#lb_'+k+'_'+id)||{}).value,r=(LBA||[]).find(x=>x.id===id);
+ const tm=(g('tm')||'').trim(),mp=(g('m')||'').trim(),fee=Number(g('f')),cap=parseInt(g('c'));
+ if(!tm||!mp||!(fee>=0)||!(cap>0)||g('f')===''){toast('Fill timing, map, price and total slots');return}
+ const res=await sb.rpc('save_scrim',{p_id:id||null,p_lobby:g('t'),p_time:tm,p_map:mp,p_fee:fee,p_cap:cap,p_active:r?r.active!==false:true});
+ toast(res.error?res.error.message:(id?'Lobby saved ✅':'New lobby added ✅'));
+ if(!res.error){await loadAll();render()}}
+async function lbToggle(id){
+ const r=(LBA||[]).find(x=>x.id===id);if(!r)return;
+ const res=await sb.rpc('save_scrim',{p_id:id,p_lobby:r.lobby||'T1',p_time:r.time_label,p_map:r.map,p_fee:r.fee,p_cap:r.cap,p_active:r.active===false});
+ toast(res.error?res.error.message:(r.active===false?'Lobby is live again':'Lobby hidden from players'));
+ if(!res.error){await loadAll();render()}}
+const _lbAdm=adm2;
+adm2=function(){
+ const h=_lbAdm(),mk='<h3>Booking sheets &amp; room ID (IDP)</h3>';
+ return h.includes(mk)?h.replace(mk,()=>lbAdmin()+mk):h+lbAdmin()};
+const _lbLA=loadAll;
+loadAll=async function(){const ok=await _lbLA.apply(this,arguments);if(ok)await lbLoad().catch(()=>0);return ok};
 
 /* ===== HOF animations (JS part) ===== */
 const HXA={v:null,coins:null,ck:null,bn:0};
