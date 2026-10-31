@@ -318,9 +318,11 @@ body::after{width:340px;height:340px;right:-120px;bottom:5%;background:radial-gr
 }
 
 /* ===== Splash (video style), sliding nav circle, growth cards ===== */
-#hxsp{position:fixed;inset:0;z-index:999;background:#000;display:flex;align-items:center;justify-content:center;animation:hxsp 2.4s ease forwards}
+#hxsp{position:fixed;inset:0;z-index:999;background:#000;display:flex;align-items:center;justify-content:center;animation:hxsp 12s ease forwards}
 #hxsp img{width:150px;height:auto;max-height:150px;object-fit:contain;opacity:0;animation:hxlogo 1.3s cubic-bezier(.2,.8,.2,1) .15s forwards,hxglw 1.4s ease-in-out .15s infinite alternate}
-@keyframes hxsp{0%,76%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden}}
+@keyframes hxsp{0%,98%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden}}
+/* the User app / Admin panel switch stays hidden until the app decides (admins only) */
+.sw{visibility:hidden}
 @keyframes hxlogo{from{opacity:0;transform:scale(.82)}to{opacity:1;transform:none}}
 @keyframes hxglw{from{filter:drop-shadow(0 0 6px rgba(76,184,255,.15))}to{filter:drop-shadow(0 0 26px rgba(76,184,255,.7))}}
 @media (prefers-reduced-motion:reduce){#hxsp{display:none}}
@@ -357,7 +359,7 @@ body::after{width:340px;height:340px;right:-120px;bottom:5%;background:radial-gr
 </style>
 </head>
 <body>
-<div id="hxsp" aria-hidden="true"><img src="hof-logo.png" alt=""></div><script>try{if(sessionStorage.getItem("hxs"))document.getElementById("hxsp").remove();else sessionStorage.setItem("hxs","1")}catch(e){}</script>
+<div id="hxsp" aria-hidden="true"><img src="hof-logo.png" alt=""></div><script>window.__hxMin=1500;try{if(sessionStorage.getItem("hxs"))window.__hxMin=500;else sessionStorage.setItem("hxs","1")}catch(e){}</script>
 <div class="wrap">
  <div class="sw g" role="tablist"><button data-m="user" onclick="setMode('user')">User app</button><button data-m="admin" onclick="setMode('admin')">Admin panel</button></div>
  <div id="app"></div>
@@ -1282,6 +1284,17 @@ setTeamImg=async function(){
  const e=await hxTeamImg(n,f);
  toast(e?'❌ '+e:'Team photo saved ✅');
  if(!e){await loadAll();render()}};
+
+
+/* ===== Splash stays until the first screen is ready (no half-loaded UI is ever visible) ===== */
+const hxT0=Date.now();
+function hxSplashOut(){
+ const el=document.getElementById('hxsp');if(!el||el.dataset.o)return;
+ el.dataset.o='1';
+ setTimeout(()=>{el.style.animation='none';el.style.transition='opacity .5s ease';void el.offsetWidth;el.style.opacity='0';setTimeout(()=>{try{el.remove()}catch(e){}},600)},Math.max(0,(window.__hxMin||1500)-(Date.now()-hxT0)))}
+const _hxR4=render;
+render=function(){_hxR4();try{if(ready&&(!uid||(S.me&&S.me.id)))hxSplashOut()}catch(e){}};
+setTimeout(hxSplashOut,8000);
 
 theme();boot();
 
